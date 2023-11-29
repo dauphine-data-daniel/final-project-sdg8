@@ -1,0 +1,21 @@
+---
+title: "Final Project: First Stage"
+author: Miriam Schäfer, Daniel Rohrbach
+format: html
+editor: visual
+echo: false
+message: false
+warning: false
+---
+
+```{r}
+here::i_am("final-project-sdg8.Rproj")
+library(here)
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(vroom)
+library(stringr)
+```
+
+[Link to the Github](https://github.com/dauphine-data-daniel/final-project-sdg8)
