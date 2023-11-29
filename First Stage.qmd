@@ -20,6 +20,8 @@ library(stringr)
 
 [Link to the Github](https://github.com/dauphine-data-daniel/final-project-sdg8)
 
+# Description
+
 ## Data sources
 
 The International Labour Organization (ILO) datasets serve as the cornerstone of our analysis on the Global Progress Towards Sustainable Development Goal (SDG) 8, which emphasizes 'Decent Work and Economic Growth'. \n
@@ -40,7 +42,6 @@ The integration of data from the ILO datasets and The Economist's World Democrac
 
 In summary, the ILO datasets are invaluable in providing the necessary data for a comprehensive analysis of global progress towards SDG 8. They offer detailed insights into labor market trends, wage dynamics, and employment conditions across different regions and demographics. Complementing this with data from The Economist's World Democracy Index allows us to explore the broader socio-political context in which economic activities and labor markets operate. Together, these sources form the backbone of our analysis, enabling a robust and multifaceted exploration of the global journey towards achieving decent work and economic growth.\n
 
-
 ## Research Question
 
 At the heart of our research project is a central question: how far has the world progressed towards achieving Sustainable Development Goal 8 (SDG 8) - promoting economic growth with decent work - and what milestones have been reached or what challenges need to be overcome as the 2030 deadline approaches? This comprehensive analysis uses extensive data sets to shed light on the different facets of this question and provide a nuanced understanding of global progress and setbacks in this important area.\n
@@ -57,4 +58,362 @@ The research will also consider regional inequalities in the achievement of SDG 
 
 As we approach the 2030 deadline for the SDGs, it is crucial to measure the progress made so far. Our research aims to identify the milestones already achieved in the realization of SDG 8. The aim is not only to highlight the successes, but also to identify the critical areas where additional efforts are needed. The aim is to paint a clear picture of the current state of play and provide insights into effective strategies and actions that could accelerate progress towards the 2030 goals.\n
 
-In summary, our research question forms the basis for a comprehensive analysis aimed at understanding global progress towards SDG 8. By examining various indicators and factors, from unemployment and gender equality to occupational safety and regional differences, all in the context of democratic values, we aim to provide a comprehensive overview of where the world stands on its path to sustainable economic growth and decent work by 2030.\n
+In summary, our research question forms the basis for a comprehensive analysis aimed at understanding global progress towards SDG 8. By examining various indicators and factors, from unemployment and gender equality to occupational safety and regional differences, all in the context of democratic values, we aim to provide a comprehensive overview of where the world stands on its path to sustainable economic growth and decent work by 2030.\n 
+
+
+
+# Work on data
+
+## 1. GDP growth 
+
+SDG indicator 8.2.1 is the annual growth rate of output per worker (GDP constant 2015 US $) (in %). 
+
+It corresponds to Target 8.2: Achieve higher levels of economic productivity through diversification, technological upgrading and innovation, including through a focus on high-value added and labor-intensive sectors.
+
+```{r}
+growth <- read.csv("SDG_A821_NOC_RT_A.csv") 
+```
+
+
+```{r}
+table_growth <- growth |> 
+  str() |> 
+  capture.output()
+knitr::kable((data.frame(table_growth)), "simple", col.names="Data: Annual growth rate per worker") 
+
+dim_growth <- dim(growth) 
+country_growth <- length(unique(growth$ref_area)) 
+year_growth <- length(unique(growth$time))
+```
+
+
+The dataset contains `r dim_growth[1]` observations and `r dim_growth[2]` variables. The observations cover `r country_growth` countries and `r year_growth` years. The time span goes from `r min(growth$time)` until `r max(growth$time)`. 
+
+
+The variable *ref_area* is a unique abbreviation for each country, the variable *time* specifies the year of the observed value for the annual growth rate per worker, which is stored under the variable name *obs_value*. 
+The variable *indicator* specifies to which SDG indicator the observation corresponds, however it contains the same code for all observations as can be seen in the table below. 
+The variable *source* allows to trace back the information, which is not relevant for our further analysis. 
+
+
+```{r}
+growth |> count(indicator)
+```
+
+
+We drop the column "indicator", since it is the same for all observations, and the column "source" because it is not relevant for our analysis. 
+
+
+```{r}
+growth <- growth |>
+  select(-indicator, -source)
+```
+
+Furthermore, we rename the column "obs_value" to make clear that it corresponds to indicator 8.2.1
+```{r}
+growth <- growth |> 
+  rename(growth_821 = obs_value)
+```
+
+
+
+
+## 2. Proportion of youth not in education or employment 
+
+SDG indicator 8.6.1: Proportion of youth (aged 15-24 years) not in education, employment or training.
+It corresponds to target 8.6: By 2020, substantially reduce the proportion of youth not in employment, education or training. 
+
+```{r}
+youth_not <- read.csv("SDG_0861_SEX_RT_A.csv") 
+```
+
+```{r}
+table_youth <- youth_not |> 
+  str() |> 
+  capture.output()
+knitr::kable((data.frame(table_youth)), "simple", col.names="Share of youth not in education, employment or training") 
+
+dim_youth <- dim(youth_not) 
+country_youth <- length(unique(youth_not$ref_area)) 
+year_youth <- length(unique(youth_not$time))
+```
+
+The dataset contains `r dim_youth[1]` observations and `r dim_youth[2]` variables. The observations cover `r country_youth` countries and `r year_youth` years. The time span goes from `r min(youth_not$time)` until `r max(youth_not$time)`. 
+
+
+The variables *ref_area*, *time*, *indicator* and *source* are defined analogously to the previous dataset. In addition, indicator 8.6.1 differentiates across gender and hence includes the variable *sex*. The variable *obs_value* contains the proportion of 15-24 year-olds who not in education or employment in %. The remaining variables *obs_status*, *note_indicator* and *note_source* are free text attributes with descriptive metadata from ILOSTAT. However, they do not contain relevant information for our analysis. 
+
+
+We drop the column "indicator", since it is the same for all observations (see the output below), and the columns "source", "obs_status", "note_indicator", "note_source" because they are not relevant for our analysis. 
+
+```{r}
+youth_not |> count(indicator)
+```
+
+```{r}
+youth_not <- youth_not |>
+  select(-indicator, -source, -obs_status, -note_indicator, -note_source)
+```
+
+Furthermore, we rename the column "obs_value" to make clear that it corresponds to indicator 8.6.1
+```{r}
+youth_not <- youth_not |> 
+  rename(youth_unemployed_861 = obs_value)
+```
+
+
+
+## 3. Average hourly earnings of employees by sex 
+
+Indicator 8.5.1: Average hourly earnings of employees, by sex, age, occupation and persons with disabilities (Local currency). 
+It corresponds to target 8.5: By 2030, achieve full and productive employment and decent work for all women and men, including for young people and persons with disabilities, and equal pay for work of equal value. 
+
+
+```{r}
+earnings <- read.csv("SDG_0851_SEX_OCU_NB_A.csv")
+```
+
+
+```{r}
+table_earnings <- earnings |> 
+  str() |> 
+  capture.output()
+knitr::kable((data.frame(table_earnings)), "simple", col.names="Average hourly earnings") 
+
+dim_earnings <- dim(earnings) 
+country_earnings <- length(unique(earnings$ref_area)) 
+year_earnings <- length(unique(earnings$time))
+```
+
+The dataset contains `r dim_earnings[1]` observations and `r dim_earnings[2]` variables. The observations cover `r country_earnings` countries and `r year_earnings` years. The time span goes from `r min(earnings$time)` until `r max(earnings$time)`. 
+
+
+The variables *ref_area*, *time*, *sex*, *indicator*, *source*, *obs_status*, *note_indicator* and *note_source* are defined analogously to the previous dataset. Just like the latter, *note_classif* is a free text attribute presenting descriptive metadata, which is not of relevance for our further analysis. The variable *obs_value* contains the average hourly earnings of employees in local currencies. According to ILOSTAT earnings exclude employers' contributions in respect of their employees paid to social security and pension schemes and also the benefits received by employees under these schemes. Earnings also exclude severance and termination pay. It should be pointed out that since statistics on earnings comes from a variety of sources, which implies heterogeneity of operational criteria. International comparisons are therefore difficult to interpret. 
+The variable *classif1* differentiates for different occupations. The ILO has defined 10 major grouops of occupations according to the ISCO-08. You can find the classification with more detailed subgroups ([here]("https://ilostat.ilo.org/resources/concepts-and-definitions/classification-occupation/")): 
+
+1. Managers
+2. Professionals
+3. Technicians and associate professionals
+4. Clerical support workers
+5. Service and sales workers
+6. Skilled agricultural, forestry and fishery workers
+7. Craft and related trades workers
+8. Plant and machine operators, and assemblers
+9. Elementary occupations
+
+0 Armed forces occupations 
+X. Not elsewhere classified
+
+
+Per definition, each occupation corresponds to a certain skill level from 1 to 4, that is also contained in *classif_1*.
+
+
+
+As before we see that the column “indicator” contains the same value for all observations, so we do not include it in our adapted dataset. We also delete the columns “source”, “obs_status”, “note_indicator”, “note_source” because they are not relevant for our analysis.
+
+```{r}
+earnings |> count(indicator)
+```
+
+
+```{r}
+earnings <- earnings |>
+  select(-indicator, -source, -obs_status, -note_classif, -note_indicator, -note_source)
+```
+
+
+Furthermore, we rename the columns "obs_value” and "classif1" to make clear that they correspond to indicator 8.5.1 and the ISCO-08 classification respectively.
+```{r}
+earnings <- earnings |> 
+  rename(isco_08_occupation = classif1) |>
+  rename(earnings_851 = obs_value)
+```
+
+
+In addition to the occupational groups, the dataset provides a classification by skill level. We decided to leave the differentiation by skill level out in this analysis because its interpretation is less explicit. 
+
+```{r}
+earnings <- earnings |> 
+  filter(startsWith(isco_08_occupation, "OCU_ISCO"))
+```
+
+
+
+## 4. Unemployment rate 
+
+
+Indicator 8.5.2: Unemployment rate, by sex, age and persons with disabilities. 
+It corresponds to target 8.5: By 2030, achieve full and productive employment and decent work for all women and men, including for young people and persons with disabilities, and equal pay for work of equal value. 
+
+```{r}
+unemp <- read.csv("SDG_0852_SEX_AGE_RT_A.csv")
+```
+
+
+```{r}
+table_unemp <- unemp |> 
+  str() |> 
+  capture.output()
+knitr::kable((data.frame(table_unemp)), "simple", col.names="Unemployment rate") 
+
+dim_unemp <- dim(unemp) 
+country_unemp <- length(unique(unemp$ref_area)) 
+year_unemp <- length(unique(unemp$time))
+```
+
+The dataset contains `r dim_unemp[1]` observations and `r dim_unemp[2]` variables. The observations cover `r country_unemp` countries and `r year_unemp` years. The time span goes from `r min(unemp$time)` until `r max(unemp$time)`. 
+
+
+The variables *ref_area*, *time*, *sex*, *indicator*, *source*, *obs_status*, *note_indicator*, *note_source* and *note_classif* are defined analogously to the previous dataset. 
+The variable *obs_value* is defined as the percentage of persons in the labor force who are unemployed. 
+The variable *classif1* contains three different values which are displayed below. The documentation of the data says that data by age includes various age bands, usually including but not limited to youth (ages 15-24), prime-age workers (age 25-54), and older workers (ages 55+). It is however not explained, which of the three indicators corresponds to what age group and since it is not obvious from their names, we decided to drop the variable to avoid confusion. We also drop all variables that have been dropped from previous datasets. 
+```{r}
+unique(unemp$classif1) 
+```
+
+
+```{r}
+unemp <- unemp |>
+  select(-indicator, -source, -obs_status, -note_classif, -note_indicator, -note_source, -classif1)
+```
+
+Furthermore, we rename the column "obs_value" to "unemployment_rate" to make clear that it corresponds to indicator 8.5.2
+```{r}
+unemp <- unemp |> 
+  rename(unemployment_rate = obs_value)
+```
+
+
+
+## 5. Informal employment 
+
+Indicator 8.3.1: Proportion of informal employment in total employment, by sector and sex. It corresponds to target 8.3: Promote development-oriented policies that support productive activities, decent job creation, entrepreneurship, creativity and innovation, and encourage the formalization and growth of micro-, small- and medium-sized enterprises, including through access to financial services
+
+
+```{r}
+informal <- read.csv("SDG_0831_SEX_ECO_RT_A.csv")
+```
+
+```{r}
+table_informal <- informal |> 
+  str() |> 
+  capture.output()
+knitr::kable((data.frame(table_informal)), "simple", col.names="Informal employment") 
+
+dim_informal <- dim(informal) 
+country_informal <- length(unique(informal$ref_area)) 
+year_informal <- length(unique(informal$time))
+```
+
+The dataset contains `r dim_informal[1]` observations and `r dim_informal[2]` variables. The observations cover `r country_informal` countries and `r year_informal` years. The time span goes from `r min(informal$time)` until `r max(informal$time)`. 
+
+
+The variables *ref_area*, *time*, *sex*, *indicator*, *source*, *obs_status*, *note_indicator*, *note_source* and *note_classif* are defined analogously to the previous dataset. 
+The variable *obs_value* is defined as the percentage of non-agricultural employment that is classified as informal employment. Informal employment comprises persons who in their main or secondary jobs were in one of the following categories: 1. Own-account workers, employers and members of producers’ cooperatives employed in their own informal sector enterprises; 2. Employees holding informal jobs, whether employed by formal sector enterprises, informal sector enterprises, or as paid domestic workers by households; 3. Producers of goods exclusively for own final use by their household 
+
+The variable *classif1* contains 16 different values which are displayed below. It contains the classification of non-agricultural activities according to the latest revision of the International Standard Industrial Classification of All Economic Activities (ISIC Rev.4). Since we are interested in aggregate results, we drop this variable from the dataset. 
+```{r}
+unique(informal$classif1) 
+```
+
+```{r}
+informal <- informal |>
+  select(-indicator, -source, -obs_status, -note_classif, -note_indicator, -note_source, -classif1)
+```
+
+Furthermore, we rename the column "obs_value" to "informal_employment" to make clear that it corresponds to indicator 8.3.1
+```{r}
+informal <- informal |> 
+  rename(informal_employment = obs_value)
+```
+
+
+
+
+
+
+## Merge 1., 2.,  3., 4. and 5. 
+
+We merge the datasets by the variables *ref_area*, *time* and *sex*. Since not all variables are available for the same countries and years, it is clear that some information gets lost in the merging process. In the process of our analysis, it might make sense at some points to use only parts of the dataset to avoid redundancy and allow for a maximum exploitation of available information. 
+
+
+```{r}
+#First, I merged 8.2.1 and 8.6.1
+
+merged_821_861 <- inner_join(growth, youth_not, by = c("ref_area", "time"))
+```
+
+
+```{r}
+#Then add 8.5.1 
+
+merged_821_851_861 <- inner_join(merged_821_861, earnings, by = c("ref_area", "time", "sex")) 
+```
+
+
+```{r}
+#Then add 8.5.2 
+
+merged_821_851_861_852 <- inner_join(merged_821_851_861, unemp, by = c("ref_area", "time", "sex")) 
+```
+
+
+```{r}
+#Then added 8.3.1
+
+merged_labor <- inner_join(merged_821_851_861_852, informal, by = c("ref_area", "time", "sex")) 
+head(merged_labor)
+```
+Remark: Adding 4. Unemployment rate to the merged dataset gives a warning that an unexpected many-to-many relationship has been detected. In order to circumvent this issue, we delete all duplicate rows from the dataset. 
+```{r}
+merged_labor <- merged_labor |>
+  distinct()
+```
+
+We can still see in the data displayed above that there are still variables containing more observations than necessary. We have tried but not yet succeeded to deal with this issue but will keep working on it before conducting further analysis. 
+
+
+
+## Democracy index 
+
+```{r}
+democracy <- read.csv("democracy-index-eiu.csv")
+```
+
+```{r}
+table_democracy <- democracy |> 
+  str() |> 
+  capture.output()
+knitr::kable((data.frame(table_democracy)), "simple", col.names="Democracy index") 
+
+dim_democracy <- dim(democracy) 
+country_democracy <- length(unique(democracy$Code)) 
+year_democracy <- length(unique(democracy$Year))
+```
+
+The dataset contains `r dim_democracy[1]` observations and `r dim_democracy[2]` variables. The observations cover `r country_democracy` countries and `r year_democracy` years. The time span goes from `r min(democracy$Year)` until `r max(democracy$Year)`. 
+
+
+The variable *Entity* contains the full names of countries or regions. The variable *Code* stores the corresponding three letter code for each country and is empty, when the Entity is not a country but a region. *Year* indicates the year of the observation and *democracy_eiu* the value of the democracy index. 
+
+Since our analysis will be on country level, we are not interested in other entities and therefore drop observations where the *Code* variable is empty. On top of that, because we want to merge the data based on *Year* and *Code* and Entity stores no additional information anymore, we drop the column *Entity*. We also rename the variables *Year* and *Code* to *time* and *ref_area* to match the names in the datasets on labor market indicators. 
+
+```{r}
+democracy <- democracy |> 
+  filter(Code!="") |> 
+  select(-Entity) |> 
+  rename(time = Year) |> 
+  rename(ref_area = Code)
+```
+
+
+
+## Merge Democracy and labor 
+
+```{r}
+# Merge by country code and year: 
+
+merged_final <- left_join(merged_labor, democracy, by = c("ref_area", "time")) 
+head(merged_final)
+```
+
+
