@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Miriam Schäfer, Daniel Rohrbach">
+
+<title>Final Project: First Stage</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="First Stage_files/libs/clipboard/clipboard.min.js"></script>
+<script src="First Stage_files/libs/quarto-html/quarto.js"></script>
+<script src="First Stage_files/libs/quarto-html/popper.min.js"></script>
+<script src="First Stage_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="First Stage_files/libs/quarto-html/anchor.min.js"></script>
+<link href="First Stage_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="First Stage_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="First Stage_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="First Stage_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="First Stage_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Final Project: First Stage</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Miriam Schäfer, Daniel Rohrbach </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p><a href="https://github.com/dauphine-data-daniel/final-project-sdg8">Link to the Github</a></p>
+<section id="description" class="level1">
+<h1>Description</h1>
+<section id="data-sources" class="level2">
+<h2 class="anchored" data-anchor-id="data-sources">Data sources</h2>
+<p>The International Labour Organization (ILO) datasets serve as the cornerstone of our analysis on the Global Progress Towards Sustainable Development Goal (SDG) 8, which emphasizes ‘Decent Work and Economic Growth’. </p>
+<p>The ILO, a specialized agency of the United Nations, has a comprehensive set of data sets that are of great importance for understanding the various facets of the labor market, employment trends and economic growth on a global level. These datasets are carefully collected, regularly updated, and represent a reliable and comprehensive source of information.</p>
+<p>SDG 8 aims to promote sustained, inclusive, and sustainable economic growth, full and productive employment, and decent work for all. In order to effectively analyze progress towards this goal, access to detailed and accurate labor statistics is essential. </p>
+<p>The <a href="https://test-ilostat.pantheonsite.io/data/#">ILOSTAT</a> data sets are particularly suitable for this purpose as they provide comprehensive data on aspects such as employment rates, wage differentials, labor productivity and working conditions. This broad range of data enables a thorough examination of the global labor market and economic activities.</p>
+<p>The ILO’s commitment to providing a wide range of data is reflected in its collection of datasets. These provide the necessary tools to assess progress and challenges in achieving SDG 8, enabling a nuanced understanding of how different regions, genders, and economic sectors are performing in the context of decent work and economic growth.</p>
+<p>Another critical aspect of our analysis is understanding the influence of democratic values on economic growth and labor markets. For this purpose, we turn to <a href="https://ourworldindata.org/grapher/democracy-index-eiu">The Economist’s World Democracy Index</a>. This index is a unique tool that measures the state of democracy in 167 countries, scoring each on a scale of 0 to 10 based on five categories: electoral process and pluralism, civil liberties, the functioning of government, political participation, and political culture.</p>
+<p>By examining the correlations between a country’s score on the Democracy Index and its performance in terms of SDG 8, we aim to uncover potential relationships between democratic governance and the quality of economic growth and employment.</p>
+<p>The integration of data from the ILO datasets and The Economist’s World Democracy Index offers a holistic view of the progress towards SDG 8. The ILO’s labor market and economic data provide a quantitative foundation, while the Democracy Index adds a qualitative dimension, allowing us to explore how political and social factors might influence economic and labor market outcomes. This combination of sources ensures a well-rounded analysis, encompassing a range of variables that can impact the achievement of decent work and economic growth globally.</p>
+<p>In summary, the ILO datasets are invaluable in providing the necessary data for a comprehensive analysis of global progress towards SDG 8. They offer detailed insights into labor market trends, wage dynamics, and employment conditions across different regions and demographics. Complementing this with data from The Economist’s World Democracy Index allows us to explore the broader socio-political context in which economic activities and labor markets operate. Together, these sources form the backbone of our analysis, enabling a robust and multifaceted exploration of the global journey towards achieving decent work and economic growth.</p>
+</section>
+<section id="research-question" class="level2">
+<h2 class="anchored" data-anchor-id="research-question">Research Question</h2>
+<p>At the heart of our research project is a central question: how far has the world progressed towards achieving Sustainable Development Goal 8 (SDG 8) - promoting economic growth with decent work - and what milestones have been reached or what challenges need to be overcome as the 2030 deadline approaches? This comprehensive analysis uses extensive data sets to shed light on the different facets of this question and provide a nuanced understanding of global progress and setbacks in this important area.</p>
+<p>SDG 8, a key component of the United Nations Sustainable Development Goals, focuses on promoting sustained, inclusive, and sustainable economic growth, full and productive employment and decent work for all. This goal is not only an economic goal, but also encompasses broader aspects of social and environmental development, making it a complex and multidimensional goal. Our research aims to analyze these dimensions by examining various indicators such as unemployment rates, gender equality in the labor market, labor safety standards and regional inequalities, in the context of different democratic regimes and values.</p>
+<p>A significant part of our analysis is dedicated to understanding global unemployment trends. Unemployment rates are a direct indicator of economic vitality and the health of the labor market. Using these rates, we can assess the effectiveness of policies and initiatives to promote employment and therefore economic growth.</p>
+<p>Gender equality in the world of work is another important aspect of our research. We want to investigate what progress has been made in closing the gender gap in employment and equal pay. This research will provide insights into the equitable distribution of economic opportunities, highlighting broader societal trends in gender roles and equality.</p>
+<p>Workplace safety is a fundamental component of decent working conditions. As part of our research, we will examine global trends in occupational safety, including the incidence of workplace accidents and the effectiveness of safety regulations and practices. This aspect of the research is crucial to understanding how far we have come in ensuring a safe working environment for all workers.</p>
+<p>The research will also consider regional inequalities in the achievement of SDG 8. Economic development and working conditions vary widely across regions and are influenced by factors such as political stability, quality of governance and economic policies. By analyzing these regional differences, we can identify patterns and unique challenges faced by different parts of the world. In addition, we will focus on the influence of democratic values on economic and working conditions, examining how governance styles affect the implementation and success of policies to achieve SDG 8.</p>
+<p>As we approach the 2030 deadline for the SDGs, it is crucial to measure the progress made so far. Our research aims to identify the milestones already achieved in the realization of SDG 8. The aim is not only to highlight the successes, but also to identify the critical areas where additional efforts are needed. The aim is to paint a clear picture of the current state of play and provide insights into effective strategies and actions that could accelerate progress towards the 2030 goals.</p>
+<p>In summary, our research question forms the basis for a comprehensive analysis aimed at understanding global progress towards SDG 8. By examining various indicators and factors, from unemployment and gender equality to occupational safety and regional differences, all in the context of democratic values, we aim to provide a comprehensive overview of where the world stands on its path to sustainable economic growth and decent work by 2030.</p>
+</section>
+</section>
+<section id="work-on-data" class="level1">
+<h1>Work on data</h1>
+<section id="gdp-growth" class="level2">
+<h2 class="anchored" data-anchor-id="gdp-growth">1. GDP growth</h2>
+<p>SDG indicator 8.2.1 is the annual growth rate of output per worker (GDP constant 2015 US $) (in %).</p>
+<p>It corresponds to Target 8.2: Achieve higher levels of economic productivity through diversification, technological upgrading and innovation, including through a focus on high-value added and labor-intensive sectors.</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">ata: Annual growth rate per worker</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">‘data.frame’: 4571 obs. of 5 variables:</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">$ ref_area : chr “AFG” “AFG” “AFG” “AFG” …</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">$ indicator: chr “SDG_A821_NOC_RT” “SDG_A821_NOC_RT” “SDG_A821_NOC_RT” “SDG_A821_NOC_RT” …</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">$ source : chr “XA:2198” “XA:2198” “XA:2198” “XA:2198” …</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">$ time : int 2020 2019 2018 2017 2016 2015 2014 2013 2012 2011 …</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">$ obs_value: num 7.91 -0.05 -2.67 0.09 0.22 -1.45 -2.32 0.69 6.5 -4.72 …</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The dataset contains 4571 observations and 5 variables. The observations cover 199 countries and 23 years. The time span goes from 2000 until 2022.</p>
+<p>The variable <em>ref_area</em> is a unique abbreviation for each country, the variable <em>time</em> specifies the year of the observed value for the annual growth rate per worker, which is stored under the variable name <em>obs_value</em>. The variable <em>indicator</em> specifies to which SDG indicator the observation corresponds, however it contains the same code for all observations as can be seen in the table below. The variable <em>source</em> allows to trace back the information, which is not relevant for our further analysis.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>        indicator    n
+1 SDG_A821_NOC_RT 4571</code></pre>
+</div>
+</div>
+<p>We drop the column “indicator”, since it is the same for all observations, and the column “source” because it is not relevant for our analysis.</p>
+<p>Furthermore, we rename the column “obs_value” to make clear that it corresponds to indicator 8.2.1</p>
+</section>
+<section id="proportion-of-youth-not-in-education-or-employment" class="level2">
+<h2 class="anchored" data-anchor-id="proportion-of-youth-not-in-education-or-employment">2. Proportion of youth not in education or employment</h2>
+<p>SDG indicator 8.6.1: Proportion of youth (aged 15-24 years) not in education, employment or training. It corresponds to target 8.6: By 2020, substantially reduce the proportion of youth not in employment, education or training.</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">hare of youth not in education, employment or training</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">‘data.frame’: 6262 obs. of 9 variables:</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">$ ref_area : chr “ABW” “ABW” “ABW” “AFG” …</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">$ indicator : chr “SDG_0861_SEX_RT” “SDG_0861_SEX_RT” “SDG_0861_SEX_RT” “SDG_0861_SEX_RT” …</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">$ source : chr “AA:22” “AA:22” “AA:22” “BA:15715” …</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">$ sex : chr “SEX_T” “SEX_M” “SEX_F” “SEX_T” …</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">$ time : int 2010 2010 2010 2021 2021 2021 2020 2020 2020 2017 …</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">$ obs_value : num 16.6 17.4 15.6 62.8 41.9 …</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">$ obs_status : chr “” “” “” “” …</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">$ note_indicator: chr “” “” “” “” …</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">$ note_source : chr “S3:20” “S3:20” “S3:20” “R1:3513_S3:8” …</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The dataset contains 6262 observations and 9 variables. The observations cover 190 countries and 48 years. The time span goes from 1976 until 2023.</p>
+<p>The variables <em>ref_area</em>, <em>time</em>, <em>indicator</em> and <em>source</em> are defined analogously to the previous dataset. In addition, indicator 8.6.1 differentiates across gender and hence includes the variable <em>sex</em>. The variable <em>obs_value</em> contains the proportion of 15-24 year-olds who not in education or employment in %. The remaining variables <em>obs_status</em>, <em>note_indicator</em> and <em>note_source</em> are free text attributes with descriptive metadata from ILOSTAT. However, they do not contain relevant information for our analysis.</p>
+<p>We drop the column “indicator”, since it is the same for all observations (see the output below), and the columns “source”, “obs_status”, “note_indicator”, “note_source” because they are not relevant for our analysis.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>        indicator    n
+1 SDG_0861_SEX_RT 6262</code></pre>
+</div>
+</div>
+<p>Furthermore, we rename the column “obs_value” to make clear that it corresponds to indicator 8.6.1</p>
+</section>
+<section id="average-hourly-earnings-of-employees-by-sex" class="level2">
+<h2 class="anchored" data-anchor-id="average-hourly-earnings-of-employees-by-sex">3. Average hourly earnings of employees by sex</h2>
+<p>Indicator 8.5.1: Average hourly earnings of employees, by sex, age, occupation and persons with disabilities (Local currency). It corresponds to target 8.5: By 2030, achieve full and productive employment and decent work for all women and men, including for young people and persons with disabilities, and equal pay for work of equal value.</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">verage hourly earnings</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">‘data.frame’: 40291 obs. of 11 variables:</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">$ ref_area : chr “AFG” “AFG” “AFG” “AFG” …</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">$ indicator : chr “SDG_0851_SEX_OCU_NB” “SDG_0851_SEX_OCU_NB” “SDG_0851_SEX_OCU_NB” “SDG_0851_SEX_OCU_NB” …</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">$ source : chr “BA:15715” “BA:15715” “BA:15715” “BA:15715” …</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">$ sex : chr “SEX_T” “SEX_T” “SEX_T” “SEX_T” …</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">$ classif1 : chr “OCU_SKILL_TOTAL” “OCU_SKILL_L3-4” “OCU_SKILL_L2” “OCU_SKILL_L1” …</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">$ time : int 2020 2020 2020 2020 2020 2020 2020 2020 2020 2020 …</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">$ obs_value : num 90.8 151.9 61.7 43.5 63.7 …</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">$ obs_status : chr “B” “B” “B” “B” …</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">$ note_classif : chr “” “” “” “” …</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">$ note_indicator: chr “T30:110_I11:264” “T30:110_I11:264” “T30:110_I11:264” “T30:110_I11:264” …</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">$ note_source : chr “R1:3513” “R1:3513” “R1:3513” “R1:3513” …</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The dataset contains 40291 observations and 11 variables. The observations cover 130 countries and 32 years. The time span goes from 1991 until 2022.</p>
+<p>The variables <em>ref_area</em>, <em>time</em>, <em>sex</em>, <em>indicator</em>, <em>source</em>, <em>obs_status</em>, <em>note_indicator</em> and <em>note_source</em> are defined analogously to the previous dataset. Just like the latter, <em>note_classif</em> is a free text attribute presenting descriptive metadata, which is not of relevance for our further analysis. The variable <em>obs_value</em> contains the average hourly earnings of employees in local currencies. According to ILOSTAT earnings exclude employers’ contributions in respect of their employees paid to social security and pension schemes and also the benefits received by employees under these schemes. Earnings also exclude severance and termination pay. It should be pointed out that since statistics on earnings comes from a variety of sources, which implies heterogeneity of operational criteria. International comparisons are therefore difficult to interpret. The variable <em>classif1</em> differentiates for different occupations. The ILO has defined 10 major grouops of occupations according to the ISCO-08. You can find the classification with more detailed subgroups (<a href="%22https://ilostat.ilo.org/resources/concepts-and-definitions/classification-occupation/%22">here</a>):</p>
+<ol type="1">
+<li>Managers</li>
+<li>Professionals</li>
+<li>Technicians and associate professionals</li>
+<li>Clerical support workers</li>
+<li>Service and sales workers</li>
+<li>Skilled agricultural, forestry and fishery workers</li>
+<li>Craft and related trades workers</li>
+<li>Plant and machine operators, and assemblers</li>
+<li>Elementary occupations</li>
+</ol>
+<p>0 Armed forces occupations X. Not elsewhere classified</p>
+<p>Per definition, each occupation corresponds to a certain skill level from 1 to 4, that is also contained in <em>classif_1</em>.</p>
+<p>As before we see that the column “indicator” contains the same value for all observations, so we do not include it in our adapted dataset. We also delete the columns “source”, “obs_status”, “note_indicator”, “note_source” because they are not relevant for our analysis.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>            indicator     n
+1 SDG_0851_SEX_OCU_NB 40291</code></pre>
+</div>
+</div>
+<p>Furthermore, we rename the columns “obs_value” and “classif1” to make clear that they correspond to indicator 8.5.1 and the ISCO-08 classification respectively.</p>
+<p>In addition to the occupational groups, the dataset provides a classification by skill level. We decided to leave the differentiation by skill level out in this analysis because its interpretation is less explicit.</p>
+</section>
+<section id="unemployment-rate" class="level2">
+<h2 class="anchored" data-anchor-id="unemployment-rate">4. Unemployment rate</h2>
+<p>Indicator 8.5.2: Unemployment rate, by sex, age and persons with disabilities. It corresponds to target 8.5: By 2030, achieve full and productive employment and decent work for all women and men, including for young people and persons with disabilities, and equal pay for work of equal value.</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">nemployment rate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">‘data.frame’: 25730 obs. of 11 variables:</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">$ ref_area : chr “ABW” “ABW” “ABW” “ABW” …</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">$ indicator : chr “SDG_0852_SEX_AGE_RT” “SDG_0852_SEX_AGE_RT” “SDG_0852_SEX_AGE_RT” “SDG_0852_SEX_AGE_RT” …</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">$ source : chr “BA:829” “BA:829” “BA:829” “BA:829” …</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">$ sex : chr “SEX_T” “SEX_M” “SEX_F” “SEX_T” …</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">$ classif1 : chr “AGE_YTHADULT_YGE15” “AGE_YTHADULT_YGE15” “AGE_YTHADULT_YGE15” “AGE_YTHADULT_YGE15” …</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">$ time : int 2011 2011 2011 2007 2007 2007 2001 2001 2001 2010 …</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">$ obs_value : num 8.9 8.6 7.8 5.71 4.97 6.53 6.9 6.5 7.4 10.6 …</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">$ obs_status : chr “” “” “” “” …</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">$ note_classif : chr “” “” “” “” …</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">$ note_indicator: chr “” “” “” “” …</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">$ note_source : chr “” “” “” “S3:21” …</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The dataset contains 25730 observations and 11 variables. The observations cover 231 countries and 49 years. The time span goes from 1976 until 2024.</p>
+<p>The variables <em>ref_area</em>, <em>time</em>, <em>sex</em>, <em>indicator</em>, <em>source</em>, <em>obs_status</em>, <em>note_indicator</em>, <em>note_source</em> and <em>note_classif</em> are defined analogously to the previous dataset. The variable <em>obs_value</em> is defined as the percentage of persons in the labor force who are unemployed. The variable <em>classif1</em> contains three different values which are displayed below. The documentation of the data says that data by age includes various age bands, usually including but not limited to youth (ages 15-24), prime-age workers (age 25-54), and older workers (ages 55+). It is however not explained, which of the three indicators corresponds to what age group and since it is not obvious from their names, we decided to drop the variable to avoid confusion. We also drop all variables that have been dropped from previous datasets.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "AGE_YTHADULT_YGE15"  "AGE_YTHADULT_Y15-24" "AGE_YTHADULT_YGE25" </code></pre>
+</div>
+</div>
+<p>Furthermore, we rename the column “obs_value” to “unemployment_rate” to make clear that it corresponds to indicator 8.5.2</p>
+</section>
+<section id="informal-employment" class="level2">
+<h2 class="anchored" data-anchor-id="informal-employment">5. Informal employment</h2>
+<p>Indicator 8.3.1: Proportion of informal employment in total employment, by sector and sex. It corresponds to target 8.3: Promote development-oriented policies that support productive activities, decent job creation, entrepreneurship, creativity and innovation, and encourage the formalization and growth of micro-, small- and medium-sized enterprises, including through access to financial services</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">nformal employment</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">‘data.frame’: 49930 obs. of 11 variables:</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">$ ref_area : chr “AFG” “AFG” “AFG” “AFG” …</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">$ indicator : chr “SDG_0831_SEX_ECO_RT” “SDG_0831_SEX_ECO_RT” “SDG_0831_SEX_ECO_RT” “SDG_0831_SEX_ECO_RT” …</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">$ source : chr “BA:15715” “BA:15715” “BA:15715” “BA:15715” …</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">$ sex : chr “SEX_T” “SEX_T” “SEX_T” “SEX_M” …</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">$ classif1 : chr “ECO_AGNAG_TOTAL” “ECO_AGNAG_AGR” “ECO_AGNAG_NAG” “ECO_AGNAG_TOTAL” …</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">$ time : int 2021 2021 2021 2021 2021 2021 2021 2021 2021 2021 …</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">$ obs_value : num 86.4 98.4 82.4 83 97.8 …</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">$ obs_status : chr “” “” “” “” …</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">$ note_classif : chr “” “” “” “” …</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">$ note_indicator: chr “” “” “” “” …</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">$ note_source : chr “R1:3513_S3:8” “R1:3513_S3:8” “R1:3513_S3:8” “R1:3513_S3:8” …</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The dataset contains 49930 observations and 11 variables. The observations cover 150 countries and 25 years. The time span goes from 1999 until 2023.</p>
+<p>The variables <em>ref_area</em>, <em>time</em>, <em>sex</em>, <em>indicator</em>, <em>source</em>, <em>obs_status</em>, <em>note_indicator</em>, <em>note_source</em> and <em>note_classif</em> are defined analogously to the previous dataset. The variable <em>obs_value</em> is defined as the percentage of non-agricultural employment that is classified as informal employment. Informal employment comprises persons who in their main or secondary jobs were in one of the following categories: 1. Own-account workers, employers and members of producers’ cooperatives employed in their own informal sector enterprises; 2. Employees holding informal jobs, whether employed by formal sector enterprises, informal sector enterprises, or as paid domestic workers by households; 3. Producers of goods exclusively for own final use by their household</p>
+<p>The variable <em>classif1</em> contains 16 different values which are displayed below. It contains the classification of non-agricultural activities according to the latest revision of the International Standard Industrial Classification of All Economic Activities (ISIC Rev.4). Since we are interested in aggregate results, we drop this variable from the dataset.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "ECO_AGNAG_TOTAL"     "ECO_AGNAG_AGR"       "ECO_AGNAG_NAG"      
+ [4] "ECO_SECTOR_TOTAL"    "ECO_SECTOR_AGR"      "ECO_SECTOR_IND"     
+ [7] "ECO_SECTOR_SER"      "ECO_SECTOR_X"        "ECO_AGGREGATE_TOTAL"
+[10] "ECO_AGGREGATE_AGR"   "ECO_AGGREGATE_MAN"   "ECO_AGGREGATE_CON"  
+[13] "ECO_AGGREGATE_MEL"   "ECO_AGGREGATE_MKT"   "ECO_AGGREGATE_PUB"  
+[16] "ECO_AGGREGATE_X"    </code></pre>
+</div>
+</div>
+<p>Furthermore, we rename the column “obs_value” to “informal_employment” to make clear that it corresponds to indicator 8.3.1</p>
+</section>
+<section id="merge-1.-2.-3.-4.-and-5." class="level2">
+<h2 class="anchored" data-anchor-id="merge-1.-2.-3.-4.-and-5.">Merge 1., 2., 3., 4. and 5.</h2>
+<p>We merge the datasets by the variables <em>ref_area</em>, <em>time</em> and <em>sex</em>. Since not all variables are available for the same countries and years, it is clear that some information gets lost in the merging process. In the process of our analysis, it might make sense at some points to use only parts of the dataset to avoid redundancy and allow for a maximum exploitation of available information.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>  ref_area time growth_821   sex youth_unemployed_861 isco_08_occupation
+1      AGO 2021      -2.58 SEX_T                21.69   OCU_ISCO08_TOTAL
+2      AGO 2021      -2.58 SEX_T                21.69   OCU_ISCO08_TOTAL
+3      AGO 2021      -2.58 SEX_T                21.69   OCU_ISCO08_TOTAL
+4      AGO 2021      -2.58 SEX_T                21.69   OCU_ISCO08_TOTAL
+5      AGO 2021      -2.58 SEX_T                21.69   OCU_ISCO08_TOTAL
+6      AGO 2021      -2.58 SEX_T                21.69   OCU_ISCO08_TOTAL
+  earnings_851 unemployment_rate informal_employment
+1       553.03            15.799              90.254
+2       553.03            15.799              99.835
+3       553.03            15.799              78.129
+4       553.03            15.799              90.254
+5       553.03            15.799              99.835
+6       553.03            15.799              86.183</code></pre>
+</div>
+</div>
+<p>Remark: Adding 4. Unemployment rate to the merged dataset gives a warning that an unexpected many-to-many relationship has been detected. In order to circumvent this issue, we delete all duplicate rows from the dataset.</p>
+<p>We can still see in the data displayed above that there are still variables containing more observations than necessary. We have tried but not yet succeeded to deal with this issue but will keep working on it before conducting further analysis.</p>
+</section>
+<section id="democracy-index" class="level2">
+<h2 class="anchored" data-anchor-id="democracy-index">Democracy index</h2>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">emocracy index</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">‘data.frame’: 2610 obs. of 4 variables:</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">$ Entity : chr “Afghanistan” “Afghanistan” “Afghanistan” “Afghanistan” …</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">$ Code : chr “AFG” “AFG” “AFG” “AFG” …</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">$ Year : int 2006 2008 2010 2011 2012 2013 2014 2015 2016 2017 …</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">$ democracy_eiu: num 3.06 3.02 2.48 2.48 2.48 2.48 2.77 2.77 2.55 2.55 …</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The dataset contains 2610 observations and 4 variables. The observations cover 169 countries and 15 years. The time span goes from 2006 until 2022.</p>
+<p>The variable <em>Entity</em> contains the full names of countries or regions. The variable <em>Code</em> stores the corresponding three letter code for each country and is empty, when the Entity is not a country but a region. <em>Year</em> indicates the year of the observation and <em>democracy_eiu</em> the value of the democracy index.</p>
+<p>Since our analysis will be on country level, we are not interested in other entities and therefore drop observations where the <em>Code</em> variable is empty. On top of that, because we want to merge the data based on <em>Year</em> and <em>Code</em> and Entity stores no additional information anymore, we drop the column <em>Entity</em>. We also rename the variables <em>Year</em> and <em>Code</em> to <em>time</em> and <em>ref_area</em> to match the names in the datasets on labor market indicators.</p>
+</section>
+<section id="merge-democracy-and-labor" class="level2">
+<h2 class="anchored" data-anchor-id="merge-democracy-and-labor">Merge Democracy and labor</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>  ref_area time growth_821   sex youth_unemployed_861 isco_08_occupation
+1      AGO 2021      -2.58 SEX_T                21.69   OCU_ISCO08_TOTAL
+2      AGO 2021      -2.58 SEX_T                21.69   OCU_ISCO08_TOTAL
+3      AGO 2021      -2.58 SEX_T                21.69   OCU_ISCO08_TOTAL
+4      AGO 2021      -2.58 SEX_T                21.69   OCU_ISCO08_TOTAL
+5      AGO 2021      -2.58 SEX_T                21.69   OCU_ISCO08_TOTAL
+6      AGO 2021      -2.58 SEX_T                21.69   OCU_ISCO08_TOTAL
+  earnings_851 unemployment_rate informal_employment democracy_eiu
+1       553.03            15.799              90.254          3.37
+2       553.03            15.799              99.835          3.37
+3       553.03            15.799              78.129          3.37
+4       553.03            15.799              86.183          3.37
+5       553.03            15.799              76.020          3.37
+6       553.03            15.799             100.000          3.37</code></pre>
+</div>
+</div>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
