@@ -187,7 +187,7 @@ year_earnings <- length(unique(earnings$time))
 The dataset contains `r dim_earnings[1]` observations and `r dim_earnings[2]` variables. The observations cover `r country_earnings` countries and `r year_earnings` years. The time span goes from `r min(earnings$time)` until `r max(earnings$time)`. 
 
 
-The variables *ref_area*, *time*, *sex*, *indicator*, *source*, *obs_status*, *note_indicator* and *note_source* are defined analogously to the previous dataset. Just like the latter, *note_classif* is a free text attribute presenting descriptive metadata, which is not of relevance for our further analysis. The variable *obs_value* contains the average hourly earnings of employees in local currencies. According to ILOSTAT earnings exclude employers' contributions in respect of their employees paid to social security and pension schemes and also the benefits received by employees under these schemes. Earnings also exclude severance and termination pay. It should be pointed out that since statistics on earnings comes from a variety of sources, which implies heterogeneity of operational criteria. International comparisons are therefore difficult to interpret. 
+The variables *ref_area*, *time*, *sex*, *indicator*, *source*, *obs_status*, *note_indicator* and *note_source* are defined analogously to the previous dataset. Just like the latter, *note_classif* is a free text attribute presenting descriptive metadata, which is not of relevance for our further analysis. The variable *obs_value* contains the average hourly earnings of employees in local currencies. According to ILOSTAT earnings exclude employers' contributions in respect of their employees paid to social security and pension schemes and also the benefits received by employees under these schemes. Earnings also exclude severance and termination pay. It should be pointed out that statistics on earnings come from a variety of sources, which implies heterogeneity of operational criteria. International comparisons are therefore difficult to interpret. 
 The variable *classif1* differentiates for different occupations. The ILO has defined 10 major grouops of occupations according to the ISCO-08. You can find the classification with more detailed subgroups ([here]("https://ilostat.ilo.org/resources/concepts-and-definitions/classification-occupation/")): 
 
 1. Managers
@@ -201,6 +201,7 @@ The variable *classif1* differentiates for different occupations. The ILO has de
 9. Elementary occupations
 
 0 Armed forces occupations 
+
 X. Not elsewhere classified
 
 
@@ -310,10 +311,17 @@ The dataset contains `r dim_informal[1]` observations and `r dim_informal[2]` va
 The variables *ref_area*, *time*, *sex*, *indicator*, *source*, *obs_status*, *note_indicator*, *note_source* and *note_classif* are defined analogously to the previous dataset. 
 The variable *obs_value* is defined as the percentage of non-agricultural employment that is classified as informal employment. Informal employment comprises persons who in their main or secondary jobs were in one of the following categories: 1. Own-account workers, employers and members of producers’ cooperatives employed in their own informal sector enterprises; 2. Employees holding informal jobs, whether employed by formal sector enterprises, informal sector enterprises, or as paid domestic workers by households; 3. Producers of goods exclusively for own final use by their household 
 
-The variable *classif1* contains 16 different values which are displayed below. It contains the classification of non-agricultural activities according to the latest revision of the International Standard Industrial Classification of All Economic Activities (ISIC Rev.4). Since we are interested in aggregate results, we drop this variable from the dataset. 
+The variable *classif1* contains 16 different values which are displayed below. It contains the classification of non-agricultural activities according to the latest revision of the International Standard Industrial Classification of All Economic Activities (ISIC Rev.4). Since we are interested in aggregate results, we only keep observations for "ECO_AGGREGATE_TOTAL" which is defined at "Economic activity (Aggregate): Total". 
 ```{r}
 unique(informal$classif1) 
 ```
+
+
+```{r}
+informal <- informal |> 
+  filter(startsWith(classif1, "ECO_AGGREGATE_TOTAL"))
+```
+
 
 ```{r}
 informal <- informal |>
