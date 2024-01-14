@@ -267,46 +267,6 @@ merged_final <- merged_labor |>
   left_join(democracy, by = c("ref_area", "time"))
 ```
 
-## Data Validation Checks
-
-```{r}
-#V2
-# Checking for inconsistencies in 'ref_area'
-print(paste("Inconsistencies in 'ref_area':", sum(!merged_final$ref_area %in% growth$ref_area)))
-
-# Summarizing key numerical columns (assuming the columns are still named the same)
-# You need to adjust the summaries according to the pivoted structure
-print(summary(merged_final[, grep("growth_821", names(merged_final))]))
-print(summary(merged_final[, grep("youth_unemployed_861", names(merged_final))]))
-print(summary(merged_final[, grep("earnings_851", names(merged_final))]))
-print(summary(merged_final[, grep("unemployment_rate", names(merged_final))]))
-print(summary(merged_final[, grep("informal_employment", names(merged_final))]))
-
-# Checking for missing values across all columns
-print(sapply(merged_final, function(x) sum(is.na(x))))
-
-# Display the first few rows of the final merged dataset
-head(merged_final)
-
-```
-
-```{r}
-
-# Checking for inconsistencies and summarizing key numerical columns
-print(paste("Inconsistencies in 'ref_area':", sum(!merged_final$ref_area %in% growth$ref_area)))
-print(paste("Inconsistencies in 'time':", sum(!merged_final$time %in% growth$time)))
-print(summary(merged_final$growth_821))
-print(summary(merged_final$youth_unemployed_861))
-print(summary(merged_final$earnings_851))
-print(summary(merged_final$unemployment_rate))
-print(summary(merged_final$informal_employment))
-print(sapply(merged_final, function(x) sum(is.na(x))))
-
-# Display the first few rows of the final merged dataset
-head(merged_final)
-
-```
-
 ## Creating a continental variable
 
 ```{r}
@@ -332,21 +292,56 @@ if (length(region_mapping$ref_area) != length(region_mapping$region)) {
 
 
 merged_final_with_region <- merge(merged_final, region_mapping, by = "ref_area", all.x = TRUE)
+```
 
+
+```{r}
 # Ensure the merging of the region_mapping was successful
 if (!"region" %in% colnames(merged_final)) {
   # Merge again if region is not in merged_final
   merged_final <- merge(merged_final, region_mapping, by = "ref_area", all.x = TRUE)
 }
+```
 
-# Now, try plotting again
-ggplot(merged_final, aes(x = time, y = youth_unemployed_861, group = region, color = region)) +
-  geom_line() +
-  theme_minimal() +
-  labs(title = "Youth Unemployment Over Time by Region", x = "Year", y = "Youth Unemployment (%)")
 
+
+## Data Validation Checks
+
+```{r}
+#V2
+# Checking for inconsistencies in 'ref_area'
+print(paste("Inconsistencies in 'ref_area':", sum(!merged_final$ref_area %in% growth$ref_area)))
+
+# Summarizing key numerical columns (assuming the columns are still named the same)
+# You need to adjust the summaries according to the pivoted structure
+print(summary(merged_final[, grep("growth_821", names(merged_final))]))
+print(summary(merged_final[, grep("youth_unemployed_861", names(merged_final))]))
+print(summary(merged_final[, grep("earnings_851", names(merged_final))]))
+print(summary(merged_final[, grep("unemployment_rate", names(merged_final))]))
+print(summary(merged_final[, grep("informal_employment", names(merged_final))]))
+
+# Checking for missing values across all columns
+print(sapply(merged_final, function(x) sum(is.na(x))))
+
+# Display the first few rows of the final merged dataset
+head(merged_final)
+
+# Checking for inconsistencies and summarizing key numerical columns
+print(paste("Inconsistencies in 'ref_area':", sum(!merged_final$ref_area %in% growth$ref_area)))
+print(paste("Inconsistencies in 'time':", sum(!merged_final$time %in% growth$time)))
+print(summary(merged_final$growth_821))
+print(summary(merged_final$youth_unemployed_861))
+print(summary(merged_final$earnings_851))
+print(summary(merged_final$unemployment_rate))
+print(summary(merged_final$informal_employment))
+print(sapply(merged_final, function(x) sum(is.na(x))))
+
+# Display the first few rows of the final merged dataset
+head(merged_final)
 
 ```
+
+
 
 # Analysis
 
@@ -371,20 +366,27 @@ ggplot(merged_final_with_region, aes(x = growth_821, fill = region)) +
 
 ```
 
-## Youth Unemployment Trends
+## Regional Youth Unemployment Trends
 
 ```{r}
-# Youth Unemployment Over Time
-ggplot(merged_final_with_region, aes(x = time, y = youth_unemployed_861, group = region, color = region)) +
-  geom_line() +
-  theme_minimal() +
-  labs(title = "Youth Unemployment Over Time by Region", x = "Year", y = "Youth Unemployment (%)")
-
 # Comparison of Youth Unemployment by Region
 ggplot(merged_final_with_region, aes(x = region, y = youth_unemployed_861)) +
   geom_boxplot() +
   theme_minimal() +
   labs(title = "Comparison of Youth Unemployment by Region", x = "Region", y = "Youth Unemployment (%)")
+```
+
+```{r}
+# Aggregating data
+merged_final_aggregated <- merged_final |>
+  group_by(time, region) |>
+  summarize(youth_unemployed_861 = mean(youth_unemployed_861, na.rm = TRUE), .groups = 'drop')
+
+# Plotting aggregated data
+ggplot(merged_final_aggregated, aes(x = time, y = youth_unemployed_861, group = region, color = region)) +
+  geom_line() +
+  theme_minimal() +
+  labs(title = "Youth Unemployment Over Time by Region", x = "Year", y = "Youth Unemployment (%)")
 
 ```
 
@@ -396,9 +398,17 @@ ggplot(merged_final, aes(x = growth_821, y = unemployment_rate)) +
   geom_point(aes(color = region)) +
   theme_minimal() +
   labs(title = "Economic Growth vs Unemployment Rate by Region", x = "Growth Rate", y = "Unemployment Rate (%)")
+```
 
-# Economic Growth over Time by Region
-ggplot(merged_final, aes(x = time, y = growth_821, group = region, color = region)) +
+
+```{r}
+# Aggregating data
+merged_final_aggregated <- merged_final |>
+  group_by(time, region) |>
+  summarize(growth_821 = mean(growth_821, na.rm = TRUE), .groups = 'drop')
+
+# Plotting aggregated data
+ggplot(merged_final_aggregated, aes(x = time, y = growth_821, group = region, color = region)) +
   geom_line() +
   theme_minimal() +
   labs(title = "Economic Growth Over Time by Region", x = "Year", y = "Growth Rate")
@@ -425,19 +435,48 @@ ggplot(merged_final, aes(x = earnings_851, fill = isco_08_occupation)) +
 ## Democracy and Labor market
 
 ```{r}
-# Democracy Index vs Unemployment Rate
+# Plot with overall trend line
 ggplot(merged_final, aes(x = democracy_eiu, y = unemployment_rate)) +
   geom_point(aes(color = region)) +
+  geom_smooth(method = "lm", se = FALSE) +
   theme_minimal() +
   labs(title = "Democracy Index vs Unemployment Rate by Region", x = "Democracy Index", y = "Unemployment Rate (%)")
 
-# Democracy Index vs Youth Unemployment
+```
+
+
+```{r}
+# Plot with overall trend line
 ggplot(merged_final, aes(x = democracy_eiu, y = youth_unemployed_861)) +
   geom_point(aes(color = region)) +
+  geom_smooth(method = "lm", se = FALSE) +
   theme_minimal() +
   labs(title = "Democracy Index vs Youth Unemployment by Region", x = "Democracy Index", y = "Youth Unemployment (%)")
 
 ```
+
+In order to test the significance of the graphical representations, we conduct the following test:
+```{r}
+# Ensure merged_final is correctly loaded and available
+if (!exists("merged_final")) {
+  # Load or create merged_final here
+}
+
+# Linear regression for democracy index and overall unemployment rate
+model_unemployment <- lm(unemployment_rate ~ democracy_eiu, data = merged_final, na.action = na.exclude)
+summary(model_unemployment)
+
+# Linear regression for democracy index and youth unemployment
+model_youth_unemployment <- lm(youth_unemployed_861 ~ democracy_eiu, data = merged_final, na.action = na.exclude)
+summary(model_youth_unemployment)
+
+```
+
+For the Unemployment Rate vs Democracy Index Analysis:
+The linear regression model examining the relationship between the democracy index and the unemployment rate shows no significant association, as indicated by the p-value of 0.659 for `democracy_eiu`. The coefficient for `democracy_eiu` is -0.01509, suggesting a very slight negative trend, but it's not statistically significant. The model explains almost none of the variance in unemployment rates (R-squared near zero), and the intercept of 11.90886 suggests the average unemployment rate when the democracy index is zero.
+
+For the Youth Unemployment vs Democracy Index Analysis: The analysis reveals a significant negative relationship between the democracy index and youth unemployment, with a highly significant p-value (< 2e-16) for `democracy_eiu`. The coefficient of -2.79985 implies that higher democracy scores are associated with lower youth unemployment rates. The model has a substantial explanatory power (20.82% of variance explained), and the intercept of 37.93713 indicates the expected youth unemployment rate when the democracy index is zero.
+
 
 ## Gender Pay Gap investigations
 
