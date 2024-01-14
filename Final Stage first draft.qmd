@@ -557,17 +557,6 @@ Another t-test, this time for all years, indicates a significant gender pay gap 
 
 
 ```{r}
-merged_final <- merged_final |>
-    filter(sex %in% c("SEX_F", "SEX_M"))
-# Gender Gap in Earnings Over Time
-ggplot(merged_final, aes(x = time, y = earnings_851, fill = sex)) +
-  geom_bar(stat = "identity", position = position_dodge()) +
-  theme_minimal() +
-  labs(title = "Gender Gap in Earnings Over Time", x = "Year", y = "Average Earnings")
-```
-
-
-```{r}
 # Filtering for only 'SEX_F' and 'SEX_M' and excluding 'NA' in region
 filtered_informal <- merged_final |>
   filter(sex %in% c("SEX_F", "SEX_M"), !is.na(informal_employment), !is.na(region), region != "NA")
@@ -590,6 +579,22 @@ ggplot(aggregated_informal_by_region, aes(x = region, y = avg_informal_employmen
 
 ```
 
+The average informal employment rates exhibit significant regional variations, with South America and Oceania reporting the highest percentages. Notably, in these regions, women constitute a larger proportion of the informal employment sector, suggesting gender-based disparities in job security and formality. Conversely, Africa and North America display a marginally higher prevalence of men in informal employment, whereas in Asia, the distribution is more balanced between the genders. This highlights the complex interplay of regional economic structures, cultural norms, and gender roles in shaping employment patterns.
+
+```{r}
+merged_final <- merged_final |>
+  filter(sex %in% c("SEX_F", "SEX_M"), time >= 2011)
+
+ggplot(merged_final, aes(x = time, y = earnings_851, fill = sex)) +
+  geom_bar(stat = "identity", position = position_dodge(), width = 0.7) +  
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 10)) +
+  scale_fill_manual(values = c("SEX_F" = "red", "SEX_M" = "blue"),
+                    labels = c("SEX_F" = "Female", "SEX_M" = "Male")) +
+  theme_minimal() +
+  labs(title = "Earnings Over Time by Gender", x = "Year", y = "Average Earnings")
+
+```
+An examination of earnings since 2011 reveals a consistent upward trend in nominal earnings. However, this increase has not bridged the gender pay gap, with males consistently receiving higher pay than females across the years. This persistent disparity underscores the enduring challenge of achieving gender equality in the workplace. The trend suggests some progress in overall earnings but highlights the need for more targeted efforts to address gender-based income inequality.
 
 # Annex
 
