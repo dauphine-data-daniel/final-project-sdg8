@@ -642,24 +642,16 @@ As we move closer to the 2030 deadline for the SDGs, our study underscores the i
 
 # Annex
 
-[Link to the Github](https://github.com/dauphine-data-daniel/final-project-sdg8)
+## Github
+
+[Github repository link](https://github.com/dauphine-data-daniel/final-project-sdg8)
 
 ## Data sources
 
-The International Labour Organization (ILO) datasets serve as the cornerstone of our analysis on the Global Progress Towards Sustainable Development Goal (SDG) 8, which emphasizes 'Decent Work and Economic Growth'. \n
+Our comprehensive analysis on the Global Progress Towards Sustainable Development Goal (SDG) 8 is primarily informed by two pivotal data sources: the International Labour Organization (ILO) datasets and The Economist's World Democracy Index. \n
 
-The ILO, a specialized agency of the United Nations, has a comprehensive set of data sets that are of great importance for understanding the various facets of the labor market, employment trends and economic growth on a global level. These datasets are carefully collected, regularly updated, and represent a reliable and comprehensive source of information.\n
+The ILO datasets are central to our study. As a specialized agency of the United Nations, the ILO offers an extensive collection of data, crucial for understanding labor market dynamics, employment trends, and facets of economic growth globally. These datasets, featured on [ILOSTAT](https://test-ilostat.pantheonsite.io/data/#), are meticulously compiled and regularly updated, ensuring reliability. They encompass diverse metrics such as employment rates, wage differentials, labor productivity, and working conditions, providing a thorough examination of global labor markets and economic activities. This data is instrumental in assessing progress towards SDG 8's goals of sustained, inclusive economic growth, and decent work for all.\n
 
-SDG 8 aims to promote sustained, inclusive, and sustainable economic growth, full and productive employment, and decent work for all. In order to effectively analyze progress towards this goal, access to detailed and accurate labor statistics is essential. \n
+Complementing this, The Economist's World Democracy Index, accessible at [this link](https://ourworldindata.org/grapher/democracy-index-eiu), offers a unique perspective on the influence of democratic values on economic growth and labor markets. This index evaluates the state of democracy in 167 countries, scoring them based on electoral processes, civil liberties, government functionality, political participation, and culture. By correlating a country's democracy score with its SDG 8 performance, we aim to uncover relationships between democratic governance and the quality of economic growth and employment.\n
 
-The [ILOSTAT](https://test-ilostat.pantheonsite.io/data/#) data sets are particularly suitable for this purpose as they provide comprehensive data on aspects such as employment rates, wage differentials, labor productivity and working conditions. This broad range of data enables a thorough examination of the global labor market and economic activities.\n
-
-The ILO's commitment to providing a wide range of data is reflected in its collection of datasets. These provide the necessary tools to assess progress and challenges in achieving SDG 8, enabling a nuanced understanding of how different regions, genders, and economic sectors are performing in the context of decent work and economic growth.\n
-
-Another critical aspect of our analysis is understanding the influence of democratic values on economic growth and labor markets. For this purpose, we turn to [The Economist's World Democracy Index](https://ourworldindata.org/grapher/democracy-index-eiu). This index is a unique tool that measures the state of democracy in 167 countries, scoring each on a scale of 0 to 10 based on five categories: electoral process and pluralism, civil liberties, the functioning of government, political participation, and political culture.\n
-
-By examining the correlations between a country's score on the Democracy Index and its performance in terms of SDG 8, we aim to uncover potential relationships between democratic governance and the quality of economic growth and employment.\n
-
-The integration of data from the ILO datasets and The Economist's World Democracy Index offers a holistic view of the progress towards SDG 8. The ILO's labor market and economic data provide a quantitative foundation, while the Democracy Index adds a qualitative dimension, allowing us to explore how political and social factors might influence economic and labor market outcomes. This combination of sources ensures a well-rounded analysis, encompassing a range of variables that can impact the achievement of decent work and economic growth globally.\n
-
-In summary, the ILO datasets are invaluable in providing the necessary data for a comprehensive analysis of global progress towards SDG 8. They offer detailed insights into labor market trends, wage dynamics, and employment conditions across different regions and demographics. Complementing this with data from The Economist's World Democracy Index allows us to explore the broader socio-political context in which economic activities and labor markets operate. Together, these sources form the backbone of our analysis, enabling a robust and multifaceted exploration of the global journey towards achieving decent work and economic growth.\n
+Integrating data from these two sources provides a comprehensive view of the progress towards SDG 8. The ILO's robust labor and economic data form a quantitative foundation, while the Democracy Index adds qualitative dimensions, exploring how political and social factors impact economic and labor market outcomes. This multifaceted approach allows for a well-rounded analysis, considering various variables that influence the achievement of decent work and economic growth worldwide. Together, these datasets not only form the backbone of our analysis but also ensure a deep, multifaceted exploration of the journey towards achieving SDG 8 globally.
