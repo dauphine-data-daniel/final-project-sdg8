@@ -1,0 +1,513 @@
+---
+title: "SDG 8 in Focus: Global Economic Growth and Labor Trends"
+author: Miriam Schäfer, Daniel Rohrbach
+date: last-modified
+editor: visual
+echo: false
+message: false
+warning: false
+---
+
+```{r}
+here::i_am("final-project-sdg8.Rproj")
+library(here)
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(vroom)
+library(stringr)
+```
+
+# Research Question
+
+At the heart of our research project is a central question: how far has the world progressed towards achieving Sustainable Development Goal 8 (SDG 8) - promoting economic growth with decent work - and what milestones have been reached or what challenges need to be overcome as the 2030 deadline approaches? This comprehensive analysis uses extensive data sets to shed light on the different facets of this question and provide a nuanced understanding of global progress and setbacks in this important area.\n
+
+SDG 8, a key component of the United Nations Sustainable Development Goals, focuses on promoting sustained, inclusive, and sustainable economic growth, full and productive employment and decent work for all. This goal is not only an economic goal, but also encompasses broader aspects of social and environmental development, making it a complex and multidimensional goal. Our research aims to analyze these dimensions by examining various indicators such as unemployment rates, gender equality in the labor market, labor safety standards and regional inequalities, in the context of different democratic regimes and values.\n
+
+A significant part of our analysis is dedicated to understanding global unemployment trends. Unemployment rates are a direct indicator of economic vitality and the health of the labor market. Using these rates, we can assess the effectiveness of policies and initiatives to promote employment and therefore economic growth.\n
+
+Gender equality in the world of work is another important aspect of our research. We want to investigate what progress has been made in closing the gender gap in employment and equal pay. This research will provide insights into the equitable distribution of economic opportunities, highlighting broader societal trends in gender roles and equality.\n
+
+Workplace safety is a fundamental component of decent working conditions. As part of our research, we will examine global trends in occupational safety, including the incidence of workplace accidents and the effectiveness of safety regulations and practices. This aspect of the research is crucial to understanding how far we have come in ensuring a safe working environment for all workers.\n
+
+The research will also consider regional inequalities in the achievement of SDG 8. Economic development and working conditions vary widely across regions and are influenced by factors such as political stability, quality of governance and economic policies. By analyzing these regional differences, we can identify patterns and unique challenges faced by different parts of the world. In addition, we will focus on the influence of democratic values on economic and working conditions, examining how governance styles affect the implementation and success of policies to achieve SDG 8.\n
+
+As we approach the 2030 deadline for the SDGs, it is crucial to measure the progress made so far. Our research aims to identify the milestones already achieved in the realization of SDG 8. The aim is not only to highlight the successes, but also to identify the critical areas where additional efforts are needed. The aim is to paint a clear picture of the current state of play and provide insights into effective strategies and actions that could accelerate progress towards the 2030 goals.\n
+
+In summary, our research question forms the basis for a comprehensive analysis aimed at understanding global progress towards SDG 8. By examining various indicators and factors, from unemployment and gender equality to occupational safety and regional differences, all in the context of democratic values, we aim to provide a comprehensive overview of where the world stands on its path to sustainable economic growth and decent work by 2030.\n 
+
+# Data sets
+
+The final dataset currently consists of 26,336 observations and 10 variables. This dataset is primarily derived from the International Labour Organization (ILO) datasets, supplemented with data from The Economist's World Democracy Index. The ILO datasets, as a specialized agency of the United Nations, offer comprehensive and reliable labor market and employment trends data, which are crucial for understanding various aspects of economic growth globally. These datasets are meticulously collected and regularly updated, ensuring the accuracy and relevance of the information.
+
+Key variables from the ILO datasets include employment rates, wage differentials, labor productivity, and working conditions. This range of data is instrumental in assessing the diverse facets of the global labor market and economic activities, thereby providing a quantitative foundation for our analysis. The datasets' breadth enables a detailed examination of labor market trends, wage dynamics, and employment conditions across different regions and demographics.
+
+Furthermore, the inclusion of The Economist's World Democracy Index introduces a qualitative dimension to our analysis. This index, which measures the state of democracy in 167 countries, is based on factors such as electoral process, civil liberties, government functioning, political participation, and political culture. By correlating a country's Democracy Index score with its performance in terms of SDG 8 (Sustainable Development Goal focusing on decent work and economic growth), the study explores the potential influence of democratic governance on the quality of economic growth and employment.
+
+The integration of these two robust data sources - the ILO datasets and The Economist's World Democracy Index - provides a comprehensive view of the progress towards SDG 8. It allows for a well-rounded analysis, taking into account a range of variables that can impact the achievement of decent work and economic growth globally. This fusion not only offers insights into the labor market and economic conditions but also enables the exploration of broader socio-political factors that may influence these economic outcomes.
+
+# Conclusion
+
+# Annex1
+
+## 1. GDP Growth Data
+
+SDG indicator 8.2.1 is the annual growth rate of output per worker (GDP constant 2015 US \$) (in %).
+
+It corresponds to Target 8.2: "Achieve higher levels of economic productivity through diversification, technological upgrading and innovation, including through a focus on high-value added and labor-intensive sectors".
+
+```{r}
+# SDG indicator 8.2.1: Annual growth rate of output per worker
+growth <- read.csv("SDG_A821_NOC_RT_A.csv") 
+table_growth <- growth |> 
+  str() |> 
+  capture.output()
+dim_growth <- dim(growth) 
+country_growth <- length(unique(growth$ref_area)) 
+year_growth <- length(unique(growth$time))
+growth <- growth |>
+  select(-indicator, -source) |>
+  group_by(ref_area, time)
+growth <- growth |> 
+  rename(growth_821 = obs_value)
+
+```
+
+The data contains `r dim_growth[1]` observations and `r dim_growth[2]` variables. The observations cover `r country_growth` countries and `r year_growth` years. The time span goes from `r min(growth$time)` until `r max(growth$time)`.
+
+We remove the "indicator" column as it's uniform across all observations and drop "source" for its irrelevance, then rename "obs_value" to align with indicator 8.2.1.
+
+The variable *ref_area* is a unique abbreviation for each country, the variable *time* specifies the year of the observed value for the annual growth rate per worker, which is stored under the variable name *obs_value*. The variable *indicator* specifies to which SDG indicator the observation corresponds, however it contains the same code for all observations as can be seen in the table below. The variable *source* allows to trace back the information, which is not relevant for our further analysis.
+
+## 2. Proportion of youth not in education or employment
+
+SDG indicator 8.6.1 is the "proportion of youth (aged 15-24 years) not in education, employment or training". It corresponds to target 8.6: "By 2020, substantially reduce the proportion of youth not in employment, education or training".
+
+```{r}
+youth_not <- read.csv("SDG_0861_SEX_RT_A.csv") 
+table_youth <- youth_not |> 
+  str() |> 
+  capture.output()
+dim_youth <- dim(youth_not) 
+country_youth <- length(unique(youth_not$ref_area)) 
+year_youth <- length(unique(youth_not$time))
+youth_not <- youth_not |>
+  select(-indicator, -source, -obs_status, -note_indicator, -note_source) |>
+  group_by(ref_area, sex, time)
+youth_not <- youth_not |> 
+  rename(youth_unemployed_861 = obs_value)
+
+```
+
+The dataset contains `r dim_youth[1]` observations and `r dim_youth[2]` variables. The observations cover `r country_youth` countries and `r year_youth` years. The time span goes from `r min(youth_not$time)` until `r max(youth_not$time)`.
+
+The variables *ref_area*, *time*, *indicator* and *source* are defined analogously to the previous dataset. In addition, indicator 8.6.1 differentiates across gender and hence includes the variable *sex*. The variable *obs_value* contains the proportion of 15-24 year-olds who not in education or employment in %. The remaining variables *obs_status*, *note_indicator* and *note_source* are free text attributes with descriptive metadata from ILOSTAT. However, they do not contain relevant information for our analysis.
+
+We drop the column "indicator", since it is the same for all observations (see the output below), and the columns "source", "obs_status", "note_indicator", "note_source" because they are not relevant for our analysis. We rename the column "obs_value" to make clear that it corresponds to indicator 8.6.1.
+
+## 3. Average Hourly Earnings of Employees by Sex
+
+Indicator 8.5.1: Average hourly earnings of employees, by sex, age, occupation and persons with disabilities (Local currency). It corresponds to target 8.5: By 2030, achieve full and productive employment and decent work for all women and men, including for young people and persons with disabilities, and equal pay for work of equal value.
+
+```{r}
+# Indicator 8.5.1: Average hourly earnings of employees, by sex, age, occupation, and persons with disabilities
+
+earnings <- read.csv("SDG_0851_SEX_OCU_NB_A.csv")
+table_earnings <- earnings |> 
+  str() |> 
+  capture.output()
+dim_earnings <- dim(earnings) 
+country_earnings <- length(unique(earnings$ref_area)) 
+year_earnings <- length(unique(earnings$time))
+earnings <- earnings |>
+  select(-indicator, -source, -obs_status, -note_classif, -note_indicator, -note_source)
+earnings <- earnings |> 
+  rename(isco_08_occupation = classif1) |>
+  rename(earnings_851 = obs_value) |>
+  group_by(ref_area, sex, time)
+```
+
+The dataset contains `r dim_earnings[1]` observations and `r dim_earnings[2]` variables. The observations cover `r country_earnings` countries and `r year_earnings` years. The time span goes from `r min(earnings$time)` until `r max(earnings$time)`.
+
+The variables *ref_area*, *time*, *sex*, *indicator*, *source*, *obs_status*, *note_indicator* and *note_source* are defined analogously to the previous dataset. Just like the latter, *note_classif* is a free text attribute presenting descriptive metadata, which is not of relevance for our further analysis. The variable *obs_value* contains the average hourly earnings of employees in local currencies. According to ILOSTAT earnings exclude employers' contributions in respect of their employees paid to social security and pension schemes and also the benefits received by employees under these schemes. Earnings also exclude severance and termination pay. It should be pointed out that since statistics on earnings comes from a variety of sources, which implies heterogeneity of operational criteria. International comparisons are therefore difficult to interpret. The variable *classif1* differentiates for different occupations. The ILO has defined 10 major grouops of occupations according to the ISCO-08. You can find the classification with more detailed subgroups ([here](%22https://ilostat.ilo.org/resources/concepts-and-definitions/classification-occupation/%22)):
+
+1.  Managers
+2.  Professionals
+3.  Technicians and associate professionals
+4.  Clerical support workers
+5.  Service and sales workers
+6.  Skilled agricultural, forestry and fishery workers
+7.  Craft and related trades workers
+8.  Plant and machine operators, and assemblers
+9.  Elementary occupations
+
+0 Armed forces occupations X. Not elsewhere classified
+
+Per definition, each occupation corresponds to a certain skill level from 1 to 4, that is also contained in *classif_1*.
+
+As before we see that the column "indicator" contains the same value for all observations, so we do not include it in our adapted dataset. We also delete the columns "source", "obs_status", "note_indicator", "note_source" because they are not relevant for our analysis.
+
+Furthermore, we rename the columns "obs_value" and "classif1" to make clear that they correspond to indicator 8.5.1 and the ISCO-08 classification respectively.
+
+In addition to the occupational groups, the dataset provides a classification by skill level. We decided to leave the differentiation by skill level out in this analysis because its interpretation is less explicit.
+
+## 4. Unemployment Rate
+
+Indicator 8.5.2: Unemployment rate, by sex, age and persons with disabilities. It corresponds to target 8.5: By 2030, achieve full and productive employment and decent work for all women and men, including for young people and persons with disabilities, and equal pay for work of equal value.
+
+```{r}
+# Indicator 8.5.2: Unemployment rate, by sex, age, and persons with disabilities
+unemp <- read.csv("SDG_0852_SEX_AGE_RT_A.csv")
+table_unemp <- unemp |> 
+  str() |> 
+  capture.output()
+dim_unemp <- dim(unemp) 
+country_unemp <- length(unique(unemp$ref_area)) 
+year_unemp <- length(unique(unemp$time))
+sex_unemp <- length(unique(unemp$sex))
+
+unemp <- unemp |>
+  select(-indicator, -source, -obs_status, -note_classif, -note_indicator, -note_source, -classif1)
+unemp <- unemp |> 
+  rename(unemployment_rate = obs_value) |>
+  group_by(ref_area, time, sex)
+```
+
+```{r}
+# to adjust for many-to-many issues
+unemp <- unemp |>
+         group_by(ref_area, time, sex) |>
+         summarize(unemployment_rate = mean(unemployment_rate, na.rm = TRUE))
+
+```
+
+The dataset contains `r dim_unemp[1]` observations and `r dim_unemp[2]` variables. The observations cover `r country_unemp` countries and `r year_unemp` years. The time span goes from `r min(unemp$time)` until `r max(unemp$time)`.
+
+The variables *ref_area*, *time*, *sex*, *indicator*, *source*, *obs_status*, *note_indicator*, *note_source* and *note_classif* are defined analogously to the previous dataset. The variable *obs_value* is defined as the percentage of persons in the labor force who are unemployed. The variable *classif1* contains three different values which are displayed below. The documentation of the data says that data by age includes various age bands, usually including but not limited to youth (ages 15-24), prime-age workers (age 25-54), and older workers (ages 55+). It is however not explained, which of the three indicators corresponds to what age group and since it is not obvious from their names, we decided to drop the variable to avoid confusion. We also drop all variables that have been dropped from previous datasets. We rename the column "obs_value" to "unemployment_rate" to make clear that it corresponds to indicator 8.5.2.
+
+## 5. Informal Employment
+
+Indicator 8.3.1: Proportion of informal employment in total employment, by sector and sex. It corresponds to target 8.3: Promote development-oriented policies that support productive activities, decent job creation, entrepreneurship, creativity and innovation, and encourage the formalization and growth of micro-, small- and medium-sized enterprises, including through access to financial services
+
+```{r}
+informal <- read.csv("SDG_0831_SEX_ECO_RT_A.csv")
+table_informal <- informal |> 
+  str() |> 
+  capture.output()
+
+dim_informal <- dim(informal) 
+country_informal <- length(unique(informal$ref_area)) 
+year_informal <- length(unique(informal$time))
+```
+
+The dataset contains `r dim_informal[1]` observations and `r dim_informal[2]` variables. The observations cover `r country_informal` countries and `r year_informal` years. The time span goes from `r min(informal$time)` until `r max(informal$time)`.
+
+The variables *ref_area*, *time*, *sex*, *indicator*, *source*, *obs_status*, *note_indicator*, *note_source* and *note_classif* are defined analogously to the previous dataset. The variable *obs_value* is defined as the percentage of non-agricultural employment that is classified as informal employment. Informal employment comprises persons who in their main or secondary jobs were in one of the following categories: 1. Own-account workers, employers and members of producers' cooperatives employed in their own informal sector enterprises; 2. Employees holding informal jobs, whether employed by formal sector enterprises, informal sector enterprises, or as paid domestic workers by households; 3. Producers of goods exclusively for own final use by their household
+
+The variable *classif1* contains 16 different values which are displayed below. It contains the classification of non-agricultural activities according to the latest revision of the International Standard Industrial Classification of All Economic Activities (ISIC Rev.4). Since we are interested in aggregate results, we only keep observations for "ECO_AGGREGATE_TOTAL" which is defined at "Economic activity (Aggregate): Total".
+
+```{r}
+unique(informal$classif1) 
+```
+
+```{r}
+informal <- informal |> 
+  filter(startsWith(classif1, "ECO_AGGREGATE_TOTAL"))
+
+informal <- informal |>
+  select(-indicator, -source, -obs_status, -note_classif, -note_indicator, -note_source, -classif1)
+```
+
+Furthermore, we rename the column "obs_value" to "informal_employment" to make clear that it corresponds to indicator 8.3.1
+
+```{r}
+informal <- informal |> 
+  rename(informal_employment = obs_value)
+```
+
+## Merging Datasets
+
+```{r}
+#First, merging earnings and youth_not
+
+merged_23 <- inner_join(earnings, youth_not, by = c("ref_area", "sex", "time"))
+
+#adding informal employment
+
+merged_235 <- inner_join(merged_23, informal, by = c("ref_area", "sex", "time"))
+
+#adding growth
+
+merged_1235 <- inner_join(merged_235, growth, by = c("ref_area", "time"))
+
+#finally adding unemp 
+
+merged_labor <- inner_join(merged_1235, unemp, by = c("ref_area", "sex", "time"))
+
+```
+
+We merge the datasets by the variables *ref_area*, *time* and *sex*. Since not all variables are available for the same countries and years, it is clear that some information gets lost in the merging process. In the process of our analysis, it might make sense at some points to use only parts of the dataset to avoid redundancy and allow for a maximum exploitation of available information.
+
+## 6. Democracy Index
+
+```{r}
+# Reading and preparing the democracy index data
+democracy <- read.csv("democracy-index-eiu.csv") |>
+  filter(Code != "") |>
+  select(-Entity) |>
+  rename(time = Year, ref_area = Code)
+
+```
+
+## Final Merging
+
+```{r}
+# Merging the labor market datasets with the democracy index dataset
+merged_final <- merged_labor |>
+  left_join(democracy, by = c("ref_area", "time"))
+```
+
+## Data Validation Checks
+
+```{r}
+#V2
+# Checking for inconsistencies in 'ref_area'
+print(paste("Inconsistencies in 'ref_area':", sum(!merged_final$ref_area %in% growth$ref_area)))
+
+# Summarizing key numerical columns (assuming the columns are still named the same)
+# You need to adjust the summaries according to the pivoted structure
+print(summary(merged_final[, grep("growth_821", names(merged_final))]))
+print(summary(merged_final[, grep("youth_unemployed_861", names(merged_final))]))
+print(summary(merged_final[, grep("earnings_851", names(merged_final))]))
+print(summary(merged_final[, grep("unemployment_rate", names(merged_final))]))
+print(summary(merged_final[, grep("informal_employment", names(merged_final))]))
+
+# Checking for missing values across all columns
+print(sapply(merged_final, function(x) sum(is.na(x))))
+
+# Display the first few rows of the final merged dataset
+head(merged_final)
+
+```
+
+```{r}
+
+# Checking for inconsistencies and summarizing key numerical columns
+print(paste("Inconsistencies in 'ref_area':", sum(!merged_final$ref_area %in% growth$ref_area)))
+print(paste("Inconsistencies in 'time':", sum(!merged_final$time %in% growth$time)))
+print(summary(merged_final$growth_821))
+print(summary(merged_final$youth_unemployed_861))
+print(summary(merged_final$earnings_851))
+print(summary(merged_final$unemployment_rate))
+print(summary(merged_final$informal_employment))
+print(sapply(merged_final, function(x) sum(is.na(x))))
+
+# Display the first few rows of the final merged dataset
+head(merged_final)
+
+```
+
+## Creating a continental variable
+
+```{r}
+region_mapping <- data.frame(
+  ref_area = c("AGO", "ALB", "ARG", "ARM", "AUT", "BEL", "BGD", "BGR", "BIH", "BOL", "BRA",
+               "BRN", "BWA", "CHE", "CHL", "CIV", "COD", "COG", "COL", "COM", "CRI", "CYP",
+               "CZE", "DNK", "DOM", "ECU", "EGY", "ESP", "EST", "ETH", "FIN", "FRA", "GBR",
+               "GHA", "GMB", "GRC", "GUY", "HND", "HRV", "HUN", "IDN", "IND", "IRL", "ISL",
+               "ITA", "JOR", "KEN", "KHM", "LAO", "LBN", "LBR", "LKA", "LSO", "LTU", "LUX",
+               "LVA", "MDA", "MDV", "MEX", "MKD", "MLI", "MLT", "MMR", "MNG", "MUS", "MWI",
+               "NAM", "NIC", "NLD", "NOR", "NPL", "PAK", "PAN", "PER", "POL", "PRT", "PRY",
+               "PSE", "RWA", "SEN", "SLE", "SLV", "SRB", "SVK", "SVN", "SWE", "SWZ", "THA",
+               "TLS", "TON", "TUN", "TUR", "TZA", "UGA", "VEN", "VNM", "WSM", "YEM", "ZAF",
+               "ZMB", "ZWE"),
+  region = c(rep("Africa", 26), rep("Asia", 21), rep("Europe", 29), 
+             rep("North America", 9), rep("South America", 11), 
+             rep("Oceania", 5))
+)
+
+if (length(region_mapping$ref_area) != length(region_mapping$region)) {
+  stop("Mismatch in number of elements between country codes and regions")
+}
+
+
+merged_final_with_region <- merge(merged_final, region_mapping, by = "ref_area", all.x = TRUE)
+
+# Ensure the merging of the region_mapping was successful
+if (!"region" %in% colnames(merged_final)) {
+  # Merge again if region is not in merged_final
+  merged_final <- merge(merged_final, region_mapping, by = "ref_area", all.x = TRUE)
+}
+
+# Now, try plotting again
+ggplot(merged_final, aes(x = time, y = youth_unemployed_861, group = region, color = region)) +
+  geom_line() +
+  theme_minimal() +
+  labs(title = "Youth Unemployment Over Time by Region", x = "Year", y = "Youth Unemployment (%)")
+
+
+```
+
+# Analysis
+
+maybe divide countries into groups such as OECD, or regional like Sub-Saharan Africa
+
+# Data analysis
+
+## Growth Rate per employed worker
+
+```{r}
+# Growth Rate Over Time
+ggplot(merged_final, aes(x = time, y = growth_821)) +
+  geom_line() +
+  theme_minimal() +
+  labs(title = "Growth Rate per Worker Over Time", x = "Year", y = "Growth Rate")
+
+# Growth Rate Distribution by Region
+ggplot(merged_final_with_region, aes(x = growth_821, fill = region)) +
+  geom_histogram(binwidth = 0.5, position = 'dodge') +
+  theme_minimal() +
+  labs(title = "Growth Rate Distribution by Region", x = "Growth Rate", y = "Count")
+
+```
+
+## Youth Unemployment Trends
+
+```{r}
+# Youth Unemployment Over Time
+ggplot(merged_final_with_region, aes(x = time, y = youth_unemployed_861, group = region, color = region)) +
+  geom_line() +
+  theme_minimal() +
+  labs(title = "Youth Unemployment Over Time by Region", x = "Year", y = "Youth Unemployment (%)")
+
+# Comparison of Youth Unemployment by Region
+ggplot(merged_final_with_region, aes(x = region, y = youth_unemployed_861)) +
+  geom_boxplot() +
+  theme_minimal() +
+  labs(title = "Comparison of Youth Unemployment by Region", x = "Region", y = "Youth Unemployment (%)")
+
+```
+
+## Economic Growth and Employment
+
+```{r}
+# Economic Growth vs Unemployment Rate
+ggplot(merged_final, aes(x = growth_821, y = unemployment_rate)) +
+  geom_point(aes(color = region)) +
+  theme_minimal() +
+  labs(title = "Economic Growth vs Unemployment Rate by Region", x = "Growth Rate", y = "Unemployment Rate (%)")
+
+# Economic Growth over Time by Region
+ggplot(merged_final, aes(x = time, y = growth_821, group = region, color = region)) +
+  geom_line() +
+  theme_minimal() +
+  labs(title = "Economic Growth Over Time by Region", x = "Year", y = "Growth Rate")
+
+```
+
+## Wage disparaties across ocupations
+
+```{r}
+# Average Earnings by Occupation
+ggplot(merged_final, aes(x = isco_08_occupation, y = earnings_851)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  theme_minimal() +
+  labs(title = "Average Earnings by Occupation", x = "Occupation", y = "Average Earnings")
+
+# Distribution of Earnings Across Occupations
+ggplot(merged_final, aes(x = earnings_851, fill = isco_08_occupation)) +
+  geom_density(alpha = 0.5) +
+  theme_minimal() +
+  labs(title = "Distribution of Earnings Across Occupations", x = "Average Earnings", y = "Density")
+
+```
+
+## Democracy and Labor market
+
+```{r}
+# Democracy Index vs Unemployment Rate
+ggplot(merged_final, aes(x = democracy_eiu, y = unemployment_rate)) +
+  geom_point(aes(color = region)) +
+  theme_minimal() +
+  labs(title = "Democracy Index vs Unemployment Rate by Region", x = "Democracy Index", y = "Unemployment Rate (%)")
+
+# Democracy Index vs Youth Unemployment
+ggplot(merged_final, aes(x = democracy_eiu, y = youth_unemployed_861)) +
+  geom_point(aes(color = region)) +
+  theme_minimal() +
+  labs(title = "Democracy Index vs Youth Unemployment by Region", x = "Democracy Index", y = "Youth Unemployment (%)")
+
+```
+
+## Gender Pay Gap investigations
+
+```{r}
+# Filter and select earnings for females and males, removing NA values
+earnings_female <- merged_final %>% 
+  filter(sex == "SEX_F", !is.na(earnings_851)) %>% 
+  pull(earnings_851)
+
+earnings_male <- merged_final %>% 
+  filter(sex == "SEX_M", !is.na(earnings_851)) %>% 
+  pull(earnings_851)
+
+# Check if there are enough data points for both groups
+if (length(earnings_female) > 1 && length(earnings_male) > 1) {
+    t_test_earnings <- t.test(earnings_female, earnings_male)
+    print(t_test_earnings)
+} else {
+    print("Not enough data to perform t-test")
+}
+
+
+```
+
+## Visualization
+
+Filtering for only male and female gender
+
+```{r}
+merged_final <- merged_final |>
+    filter(sex %in% c("SEX_F", "SEX_M"))
+```
+
+```{r}
+# Gender Gap in Earnings Over Time
+ggplot(merged_final, aes(x = time, y = earnings_851, fill = sex)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  theme_minimal() +
+  labs(title = "Gender Gap in Earnings Over Time", x = "Year", y = "Average Earnings")
+
+```
+
+```{r}
+
+ggplot(merged_final, aes(x = time, y = informal_employment, fill = sex)) +
+  geom_area(position = 'stack') +
+  theme_minimal() +
+  labs(title = "Informal Employment Over Time by Gender", x = "Year", y = "Informal Employment (%)")
+```
+
+# Annex
+
+[Link to the Github](https://github.com/dauphine-data-daniel/final-project-sdg8)
+
+## Data sources
+
+The International Labour Organization (ILO) datasets serve as the cornerstone of our analysis on the Global Progress Towards Sustainable Development Goal (SDG) 8, which emphasizes 'Decent Work and Economic Growth'. \n
+
+The ILO, a specialized agency of the United Nations, has a comprehensive set of data sets that are of great importance for understanding the various facets of the labor market, employment trends and economic growth on a global level. These datasets are carefully collected, regularly updated, and represent a reliable and comprehensive source of information.\n
+
+SDG 8 aims to promote sustained, inclusive, and sustainable economic growth, full and productive employment, and decent work for all. In order to effectively analyze progress towards this goal, access to detailed and accurate labor statistics is essential. \n
+
+The [ILOSTAT](https://test-ilostat.pantheonsite.io/data/#) data sets are particularly suitable for this purpose as they provide comprehensive data on aspects such as employment rates, wage differentials, labor productivity and working conditions. This broad range of data enables a thorough examination of the global labor market and economic activities.\n
+
+The ILO's commitment to providing a wide range of data is reflected in its collection of datasets. These provide the necessary tools to assess progress and challenges in achieving SDG 8, enabling a nuanced understanding of how different regions, genders, and economic sectors are performing in the context of decent work and economic growth.\n
+
+Another critical aspect of our analysis is understanding the influence of democratic values on economic growth and labor markets. For this purpose, we turn to [The Economist's World Democracy Index](https://ourworldindata.org/grapher/democracy-index-eiu). This index is a unique tool that measures the state of democracy in 167 countries, scoring each on a scale of 0 to 10 based on five categories: electoral process and pluralism, civil liberties, the functioning of government, political participation, and political culture.\n
+
+By examining the correlations between a country's score on the Democracy Index and its performance in terms of SDG 8, we aim to uncover potential relationships between democratic governance and the quality of economic growth and employment.\n
+
+The integration of data from the ILO datasets and The Economist's World Democracy Index offers a holistic view of the progress towards SDG 8. The ILO's labor market and economic data provide a quantitative foundation, while the Democracy Index adds a qualitative dimension, allowing us to explore how political and social factors might influence economic and labor market outcomes. This combination of sources ensures a well-rounded analysis, encompassing a range of variables that can impact the achievement of decent work and economic growth globally.\n
+
+In summary, the ILO datasets are invaluable in providing the necessary data for a comprehensive analysis of global progress towards SDG 8. They offer detailed insights into labor market trends, wage dynamics, and employment conditions across different regions and demographics. Complementing this with data from The Economist's World Democracy Index allows us to explore the broader socio-political context in which economic activities and labor markets operate. Together, these sources form the backbone of our analysis, enabling a robust and multifaceted exploration of the global journey towards achieving decent work and economic growth.\n
