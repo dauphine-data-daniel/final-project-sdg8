@@ -595,7 +595,40 @@ ggplot(merged_final, aes(x = time, y = earnings_851, fill = sex)) +
   labs(title = "Earnings Over Time by Gender", x = "Year", y = "Average Earnings")
 
 ```
-An examination of earnings since 2011 reveals a consistent upward trend in nominal earnings. However, this increase has not bridged the gender pay gap, with males consistently receiving higher pay than females across the years. This persistent disparity underscores the enduring challenge of achieving gender equality in the workplace. The trend suggests some progress in overall earnings but highlights the need for more targeted efforts to address gender-based income inequality.
+An examination of earnings since 2011 reveals a consistent upward trend in nominal earnings. However, this increase has not bridged the gender pay gap, with males consistently receiving higher pay than females across the years. This persistent disparity underscores the enduring challenge of achieving gender equality in the workplace. The trend suggests some progress in overall earnings but highlights the need for more targeted efforts to address gender-based income inequality. 
+
+
+## Earnings by occupations 
+
+```{r}
+# Occupation mapping 
+occupation_mapping <- data.frame(
+  isco_08_occupation = c("OCU_ISCO08_TOTAL", "OCU_ISCO08_1", "OCU_ISCO08_2", "OCU_ISCO08_3", "OCU_ISCO08_4", "OCU_ISCO08_5", "OCU_ISCO08_6", "OCU_ISCO08_7", "OCU_ISCO08_8", "OCU_ISCO08_9", "OCU_ISCO08_0", "OCU_ISCO08_X"),
+  sector_name = c("Total", "Managers", "Professionals", "Technicians", "Cleric",
+                   "Services", "Skilled agriculture, forestry, fishery", "Craft & trade", "Plant & machine operations", "Elementary occupations", "Armed forces", "Not classified")
+)
+```
+
+
+```{r}
+merged_final |>
+  merge( occupation_mapping, by = "isco_08_occupation", all.x = TRUE) |>
+  filter(region == "Africa" & str_starts(isco_08_occupation, "OCU_ISCO08") & (time==2015 | time==2020 | time==2022)) |>
+  ggplot() +
+    geom_col(aes(y = earnings_851, x = sector_name, color = sector_name)) +
+    facet_wrap(time~.) +
+    labs(title = "Average Hourly Earnings by Occupation in Africa",
+         x = "Occupations",
+         y = "Average Hourly Earnings",
+         color = "Occupation") + 
+    theme(axis.text.x=element_blank())
+```
+
+
+This figure shows the development of average hourly earnings across occupations on the African continent.It is especially interesting to look at Africa, since it is the region with the youngest population and therefore with a very dynamic labor market. \n
+
+The examination of earnings across various occupations in African countries between 2015 and 2022 reveals a trend of overall improvement, with particular increases in higher-skilled occupations. The data suggests that professionals, managers, and individuals in technical and associate professional roles experienced significant boosts in average hourly earnings over this period. However, it is crucial to acknowledge a dip in earnings during the pandemic years, which mirrors a global economic downturn. This decrease, while temporary, underscores the vulnerability of certain sectors to external shocks. In the context of the United Nations' SDG 8, the observed positive trajectory aligns with the broader goal of fostering economic prosperity and equitable opportunities. The emphasis on higher-skilled occupations indicates progress in providing quality employment, contributing to the overarching objective of creating a more resilient and inclusive workforce in African nations.
+
 
 # Conclusion
 
