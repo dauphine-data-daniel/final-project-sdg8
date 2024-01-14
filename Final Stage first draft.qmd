@@ -2,10 +2,13 @@
 title: "SDG 8 in Focus: Global Economic Growth and Labor Trends"
 author: Miriam Schäfer, Daniel Rohrbach
 date: last-modified
-editor: visual
-echo: false
-message: false
-warning: false
+editor: visual 
+format:
+  html: 
+    toc: true
+    echo: false
+    message: false
+    warning: false 
 ---
 
 ```{r}
