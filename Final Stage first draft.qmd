@@ -21,6 +21,7 @@ library(vroom)
 library(stringr)
 library(countrycode)
 library(rnaturalearth)
+library(rnaturalearthdata)
 library(maps) 
 library(sf) 
 library(viridis)
@@ -316,44 +317,27 @@ if (!"region" %in% colnames(merged_final)) {
 ## Data Validation Checks
 
 ```{r}
-#V2
+# Simplified Data Validation Check
+
 # Checking for inconsistencies in 'ref_area'
-print(paste("Inconsistencies in 'ref_area':", sum(!merged_final$ref_area %in% growth$ref_area)))
+inconsistencies_ref_area <- sum(!merged_final$ref_area %in% growth$ref_area)
+print(paste("Inconsistencies in 'ref_area':", inconsistencies_ref_area))
 
-# Summarizing key numerical columns (assuming the columns are still named the same)
-# You need to adjust the summaries according to the pivoted structure
-print(summary(merged_final[, grep("growth_821", names(merged_final))]))
-print(summary(merged_final[, grep("youth_unemployed_861", names(merged_final))]))
-print(summary(merged_final[, grep("earnings_851", names(merged_final))]))
-print(summary(merged_final[, grep("unemployment_rate", names(merged_final))]))
-print(summary(merged_final[, grep("informal_employment", names(merged_final))]))
+# Summarizing missing values in key columns
+na_summary <- sapply(merged_final[, c("growth_821", "youth_unemployed_861", "earnings_851", 
+                                      "unemployment_rate", "informal_employment", "democracy_eiu")], 
+                     function(x) sum(is.na(x)))
+print("Missing Values Summary:")
+print(na_summary)
 
-# Checking for missing values across all columns
-print(sapply(merged_final, function(x) sum(is.na(x))))
-
-# Display the first few rows of the final merged dataset
-head(merged_final)
-
-# Checking for inconsistencies and summarizing key numerical columns
-print(paste("Inconsistencies in 'ref_area':", sum(!merged_final$ref_area %in% growth$ref_area)))
-print(paste("Inconsistencies in 'time':", sum(!merged_final$time %in% growth$time)))
-print(summary(merged_final$growth_821))
-print(summary(merged_final$youth_unemployed_861))
-print(summary(merged_final$earnings_851))
-print(summary(merged_final$unemployment_rate))
-print(summary(merged_final$informal_employment))
-print(sapply(merged_final, function(x) sum(is.na(x))))
-
-# Display the first few rows of the final merged dataset
-head(merged_final)
+# Displaying a brief overview of the dataset
+dataset_overview <- head(merged_final)
+print("Dataset Overview:")
+print(dataset_overview)
 
 ```
 
-
-
-# Analysis
-
-maybe divide countries into groups such as OECD, or regional like Sub-Saharan Africa
+The data validation checks indicate no inconsistencies in the 'ref_area' field, suggesting reliable merging of datasets. However, the significant number of missing values in `earnings_851` and `democracy_eiu` could be attributed to differing observation periods and timespans, especially considering that democracy data is sourced separately from other indicators and might not align perfectly with the employment and economic data in terms of coverage and temporal scope. The dataset overview provides a clear picture of the combined socio-economic and political data, emphasizing the diversity and depth of information available for analysis.
 
 # Data analysis
 
@@ -458,22 +442,6 @@ ggplot(merged_final_aggregated, aes(x = time, y = growth_821, group = region, co
 
 ```
 
-## Wage disparaties across ocupations
-
-```{r}
-# Average Earnings by Occupation
-ggplot(merged_final, aes(x = isco_08_occupation, y = earnings_851)) +
-  geom_bar(stat = "identity", position = position_dodge()) +
-  theme_minimal() +
-  labs(title = "Average Earnings by Occupation", x = "Occupation", y = "Average Earnings")
-
-# Distribution of Earnings Across Occupations
-ggplot(merged_final, aes(x = earnings_851, fill = isco_08_occupation)) +
-  geom_density(alpha = 0.5) +
-  theme_minimal() +
-  labs(title = "Distribution of Earnings Across Occupations", x = "Average Earnings", y = "Density")
-
-```
 
 ## Democracy and Labor market
 
@@ -521,10 +489,53 @@ The linear regression model examining the relationship between the democracy ind
 For the Youth Unemployment vs Democracy Index Analysis: The analysis reveals a significant negative relationship between the democracy index and youth unemployment, with a highly significant p-value (< 2e-16) for `democracy_eiu`. The coefficient of -2.79985 implies that higher democracy scores are associated with lower youth unemployment rates. The model has a substantial explanatory power (20.82% of variance explained), and the intercept of 37.93713 indicates the expected youth unemployment rate when the democracy index is zero.
 
 
-## Gender Pay Gap investigations
+## Gender Pay Gap
 
 ```{r}
-# Filter and select earnings for females and males, removing NA values
+# Welch Test for the year 2015
+earnings_2015 <- merged_final |>
+  filter(time == 2015, !is.na(earnings_851))
+
+earnings_female_2015 <- earnings_2015 |>
+  filter(sex == "SEX_F") |>
+  pull(earnings_851)
+
+earnings_male_2015 <- earnings_2015 |>
+  filter(sex == "SEX_M") |>
+  pull(earnings_851)
+
+if (length(earnings_female_2015) > 1 && length(earnings_male_2015) > 1) {
+    t_test_2015 <- t.test(earnings_female_2015, earnings_male_2015)
+    print(t_test_2015)
+} else {
+    print("Not enough data to perform t-test for 2015")
+}
+
+# Welch Test for the year 2022
+earnings_2022 <- merged_final |>
+  filter(time == 2022, !is.na(earnings_851))
+
+earnings_female_2022 <- earnings_2022 |>
+  filter(sex == "SEX_F") |>
+  pull(earnings_851)
+
+earnings_male_2022 <- earnings_2022 |>
+  filter(sex == "SEX_M") |>
+  pull(earnings_851)
+
+if (length(earnings_female_2022) > 1 && length(earnings_male_2022) > 1) {
+    t_test_2022 <- t.test(earnings_female_2022, earnings_male_2022)
+    print(t_test_2022)
+} else {
+    print("Not enough data to perform t-test for 2022")
+}
+
+```
+
+The Welch Two Sample t-test results indicate that the global gender pay gap, as measured by the difference in average earnings between females and males, has not shown a statistically significant change from 2015 to 2022. In 2015, the average earnings for females were 1761.423 compared to 2016.723 for males, with a p-value of 0.506, suggesting no significant gender-based difference in earnings for that year. Similarly, in 2022, the earnings were 3744.651 for females and 4035.115 for males, with the p-value increasing to 0.7138, further indicating that the gender pay gap remained statistically insignificant over these years, despite the implementation of Sustainable Development Goals (SDGs).
+
+```{r}
+# Test for overall significance
 earnings_female <- merged_final %>% 
   filter(sex == "SEX_F", !is.na(earnings_851)) %>% 
   pull(earnings_851)
@@ -533,42 +544,57 @@ earnings_male <- merged_final %>%
   filter(sex == "SEX_M", !is.na(earnings_851)) %>% 
   pull(earnings_851)
 
-# Check if there are enough data points for both groups
 if (length(earnings_female) > 1 && length(earnings_male) > 1) {
     t_test_earnings <- t.test(earnings_female, earnings_male)
     print(t_test_earnings)
 } else {
     print("Not enough data to perform t-test")
 }
+```
 
+
+Another t-test, this time for all years, indicates a significant gender pay gap globally. This is evidenced by the p-value of 0.02304, which is below the standard significance level of 0.05. This statistical significance suggests that the observed difference in average earnings – females earning 1567.330 compared to males earning 1773.816 – is not due to random chance but reflects a true disparity in pay between genders across the dataset. The considerably higher significance level is probably due to the larger size of the test sample.
+
+
+```{r}
+# Filtering for only 'SEX_F' and 'SEX_M' and excluding 'NA' in region
+filtered_informal <- merged_final |>
+  filter(sex %in% c("SEX_F", "SEX_M"), !is.na(informal_employment), !is.na(region), region != "NA")
+
+# Aggregating data by region and sex
+aggregated_informal_by_region <- filtered_informal |>
+  group_by(region, sex) |>
+  summarize(avg_informal_employment = mean(informal_employment, na.rm = TRUE), .groups = 'drop')
+
+# Plotting the aggregated data with rotated x-axis labels
+ggplot(aggregated_informal_by_region, aes(x = region, y = avg_informal_employment / 100, fill = sex)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  scale_y_continuous(labels = scales::percent_format()) +
+  labs(title = "Average Informal Employment", 
+       x = "Region", 
+       y = "Average Informal Employment (%)") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) + scale_fill_manual(values = c("SEX_F" = "red", "SEX_M" = "blue"),
+                    labels = c("SEX_F" = "Female", "SEX_M" = "Male"))
 
 ```
 
-## Visualization
-
-Filtering for only male and female gender
+The average informal employment rates exhibit significant regional variations, with South America and Oceania reporting the highest percentages. Notably, in these regions, women constitute a larger proportion of the informal employment sector, suggesting gender-based disparities in job security and formality. Conversely, Africa and North America display a marginally higher prevalence of men in informal employment, whereas in Asia, the distribution is more balanced between the genders. This highlights the complex interplay of regional economic structures, cultural norms, and gender roles in shaping employment patterns.
 
 ```{r}
 merged_final <- merged_final |>
-    filter(sex %in% c("SEX_F", "SEX_M"))
-```
+  filter(sex %in% c("SEX_F", "SEX_M"), time >= 2011)
 
-```{r}
-# Gender Gap in Earnings Over Time
 ggplot(merged_final, aes(x = time, y = earnings_851, fill = sex)) +
-  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_bar(stat = "identity", position = position_dodge(), width = 0.7) +  
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 10)) +
+  scale_fill_manual(values = c("SEX_F" = "red", "SEX_M" = "blue"),
+                    labels = c("SEX_F" = "Female", "SEX_M" = "Male")) +
   theme_minimal() +
-  labs(title = "Gender Gap in Earnings Over Time", x = "Year", y = "Average Earnings")
+  labs(title = "Earnings Over Time by Gender", x = "Year", y = "Average Earnings")
 
 ```
-
-```{r}
-
-ggplot(merged_final, aes(x = time, y = informal_employment, fill = sex)) +
-  geom_area(position = 'stack') +
-  theme_minimal() +
-  labs(title = "Informal Employment Over Time by Gender", x = "Year", y = "Informal Employment (%)")
-```
+An examination of earnings since 2011 reveals a consistent upward trend in nominal earnings. However, this increase has not bridged the gender pay gap, with males consistently receiving higher pay than females across the years. This persistent disparity underscores the enduring challenge of achieving gender equality in the workplace. The trend suggests some progress in overall earnings but highlights the need for more targeted efforts to address gender-based income inequality.
 
 # Annex
 
