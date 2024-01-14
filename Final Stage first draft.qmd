@@ -258,7 +258,7 @@ merged_labor <- inner_join(merged_1235, unemp, by = c("ref_area", "sex", "time")
 
 ## 6. Democracy index
 
-Here, we processed the democracy index data by reading the CSV file and conducting initial data cleaning. This included filtering out rows with empty 'Code' fields, removing the irrelevant 'Entity' column, and renaming columns for consistency ('Year' to 'time' and 'Code' to 'ref_area'). This step prepared the democracy index data for subsequent integration with the labor market datasets.
+The democracy index ranges from 1 to 10 where 10 is the most democratic. It combines information on elections, civil liberties and political participation. For our analysis, we processed the democracy index data by reading the CSV file and conducting initial data cleaning. This included filtering out rows with empty 'Code' fields, removing the irrelevant 'Entity' column, and renaming columns for consistency ('Year' to 'time' and 'Code' to 'ref_area'). This step prepared the democracy index data for subsequent integration with the labor market datasets.
 
 ```{r}
 # Reading and preparing the democracy index data
@@ -352,7 +352,7 @@ The data validation checks indicate no inconsistencies in the 'ref_area' field, 
 
 Real GDP per unit of labor input is a measure of labor productivity. When monitored over time, it offers insight into labor productivity growth, and on the evolution, efficiency and quality of human capital in the production process. Economic growth in a country can be described either to increased labor input or to more effective work by those who are employed. The indicator at hand casts light on the latter effect, being therefore a key measure of economic performance. Labor productivity (and growth) estimates can contribute to the understanding of how labor market performance affects living standards.
 
-The corresponding target, as phrased in the SDGs, is to "achieve higher levels of economic productivity through diversification, technological upgrading and innovation, including through a focus on high-value added and labour-intensive sectors". The following maps show the growth rates of real GDP per worker in 2015 when the SDG agenda was announced, in 2020 when the Covid19 pandemic massively influenced the economic situation worldwide and 2022, the last available data. 
+The corresponding target, as phrased in the SDGs, is to "achieve higher levels of economic productivity through diversification, technological upgrading and innovation, including through a focus on high-value added and labour-intensive sectors". The following maps show the growth rates of real GDP per worker in 2015 when the SDG agenda was announced, in 2020 when the Covid19 pandemic massively influenced the economic situation worldwide and in 2022, the last available data. 
 
 
 ```{r}
@@ -395,7 +395,7 @@ growth_region |>
 ```
 
 
-The worldwide mean growth rate was `r round(mean(merged_final$growth_821[merged_final$time == 2015], na.rm = TRUE),2)`% in 2015 and `r round(mean(merged_final$growth_821[merged_final$time == 2022], na.rm = TRUE),2)`% in 2022. It can be seen that all regions with an exception of South America faced a severe collaps of growth rates in 2020. Even though the average growth rate worldwide seems to have partly recovered from that, it has also not increased significantly since the start of the implementation of SDGs in 2015. The world maps indicate that most European countries are back on the growth level from before the Covid crisis, while especially some of the big economies like China, India or the U.S. are not back on previous levels. The reasons for that are versatile, but in terms of the long term target by the UN, some change is still necessary to "higher levels of economic productivity" until 2030.
+The worldwide mean growth rate was `r round(mean(merged_final$growth_821[merged_final$time == 2015], na.rm = TRUE),2)`% in 2015 and `r round(mean(merged_final$growth_821[merged_final$time == 2022], na.rm = TRUE),2)`% in 2022. It can be seen that all regions with an exception of South America faced a severe collaps of growth rates in 2020. Even though the average growth rate worldwide seems to have partly recovered from that, it has also not increased significantly since the start of the implementation of SDGs in 2015. The world maps indicate that most European countries are back on the growth level from before the Covid crisis, while especially some of the big economies like China, India or the U.S. are not back on previous levels. The reasons for that are versatile, but in terms of the long term target by the UN, some change is still necessary to achieve "higher levels of economic productivity" until 2030.
 
 
 
@@ -436,7 +436,7 @@ ggplot(youth_unemployment_2022, aes(x = region, y = youth_unemployed_861)) +
   labs(title = "Youth Unemployment by Region in 2022", x = "Region", y = "Youth Unemployment (%)")
 
 ```
-Regionally, youth unemployment levels have displayed notable differences over the years. Oceania has historically exhibited relatively higher rates of youth unemployment, while South America has recently reported some of the lowest levels, mostly due to a period of decline in the years leading up to 2013. Comparing the data from 2015 to 2022, and excluding Oceania due to limited data availability, we observe that the averages in Africa, Europe, and Asia have hovered between 17 and 20 percent and remained relatively stable. In contrast, North America has experienced a more noticeable reduction in youth unemployment. However, the variance within each region, indicating the range of unemployment rates across different countries, has increased over time, highlighting the growing disparity in employment opportunities for youth within these regions.
+Regionally, youth unemployment levels have displayed notable differences over the years. Oceania has historically exhibited relatively higher rates of youth unemployment, while South America has recently reported some of the lowest levels, mostly due to a period of decline in the years leading up to 2013. Comparing the data from 2015 to 2022, and excluding Oceania due to limited data availability, we observe that the averages in Africa, Europe, and Asia have hovered between 17 and 20 percent and remained relatively stable. In contrast, North America has experienced a more noticeable reduction in youth unemployment. However, the variance within each region, indicating the range of unemployment rates across different countries, has increased over time, highlighting the growing disparity in employment opportunities for youth within these regions. Hence, we do not see a major impact of the implementation of the SDGs so far. 
 
 
 ## Democracy and employment trends
@@ -483,9 +483,11 @@ summary(model_youth_unemployment)
 ```
 
 For the Unemployment Rate vs Democracy Index Analysis:
-The linear regression model examining the relationship between the democracy index and the unemployment rate shows no significant association, as indicated by the p-value of 0.659 for `democracy_eiu`. The coefficient for `democracy_eiu` is -0.01509, suggesting a very slight negative trend, but it's not statistically significant. The model explains almost none of the variance in unemployment rates (R-squared near zero), and the intercept of 11.90886 suggests the average unemployment rate when the democracy index is zero.
+The linear regression model examining the relationship between the democracy index and the unemployment rate shows no significant association, as indicated by the p-value of 0.659 for `democracy_eiu`. The coefficient for `democracy_eiu` is -0.01509, suggesting a very slight negative trend, but it is not statistically significant. The model explains almost none of the variance in unemployment rates (R-squared near zero), and the intercept of 11.90886 suggests the average unemployment rate when the democracy index is zero.
 
-For the Youth Unemployment vs Democracy Index Analysis: The analysis reveals a significant negative relationship between the democracy index and youth unemployment, with a highly significant p-value (< 2e-16) for `democracy_eiu`. The coefficient of -2.79985 implies that higher democracy scores are associated with lower youth unemployment rates. The model has a substantial explanatory power (20.82% of variance explained), and the intercept of 37.93713 indicates the expected youth unemployment rate when the democracy index is zero.
+For the Youth Unemployment vs Democracy Index Analysis: The analysis reveals a significant negative relationship between the democracy index and youth unemployment, with a highly significant p-value (< 2e-16) for `democracy_eiu`. The coefficient of -2.79985 implies that higher democracy scores are associated with lower youth unemployment rates. The model has a substantial explanatory power (20.82% of variance explained), and the intercept of 37.93713 indicates the expected youth unemployment rate when the democracy index is zero. 
+
+These results are not surprising. Democratic societies typically emphasize education, skill development, and employment initiatives, which can mitigate youth unemployment. Additionally, transparent governance in democracies may lead to better economic planning and resource allocation, reducing barriers to entry for young job seekers and fostering a more dynamic and inclusive labor market. The results also show that the different SDGs are highly dependent of one another. An economy that pursues decent work and economic growth (SDG 8) is likely to implement strong institutions (SDG 16), to reduce inequalities on the labor market (SDG 10) and to invest in industry, innovation and infrastructure (SDG 9). 
 
 
 ## Gender-specific labor analysis
@@ -615,7 +617,7 @@ merged_final |>
   merge( occupation_mapping, by = "isco_08_occupation", all.x = TRUE) |>
   filter(region == "Africa" & str_starts(isco_08_occupation, "OCU_ISCO08") & (time==2015 | time==2020 | time==2022)) |>
   ggplot() +
-    geom_col(aes(y = earnings_851, x = sector_name, color = sector_name)) +
+    geom_col(aes(y = earnings_851, x = sector_name, fill = sector_name)) +
     facet_wrap(time~.) +
     labs(title = "Average Hourly Earnings by Occupation in Africa",
          x = "Occupations",
@@ -625,7 +627,7 @@ merged_final |>
 ```
 
 
-This figure shows the development of average hourly earnings across occupations on the African continent.It is especially interesting to look at Africa, since it is the region with the youngest population and therefore with a very dynamic labor market. \n
+This figure shows the development of average hourly earnings across occupations on the African continent. It is especially interesting to look at Africa, since it is the region with the youngest population and therefore with a very dynamic labor market. 
 
 The examination of earnings across various occupations in African countries between 2015 and 2022 reveals a trend of overall improvement, with particular increases in higher-skilled occupations. The data suggests that professionals, managers, and individuals in technical and associate professional roles experienced significant boosts in average hourly earnings over this period. However, it is crucial to acknowledge a dip in earnings during the pandemic years, which mirrors a global economic downturn. This decrease, while temporary, underscores the vulnerability of certain sectors to external shocks. In the context of the United Nations' SDG 8, the observed positive trajectory aligns with the broader goal of fostering economic prosperity and equitable opportunities. The emphasis on higher-skilled occupations indicates progress in providing quality employment, contributing to the overarching objective of creating a more resilient and inclusive workforce in African nations.
 
