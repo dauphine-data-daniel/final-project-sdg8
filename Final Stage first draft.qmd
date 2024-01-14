@@ -26,7 +26,7 @@ library(sf)
 library(viridis)
 ```
 
-# Research Question
+# Research Question 
 
 At the heart of our research project is a central question: how far has the world progressed towards achieving Sustainable Development Goal 8 (SDG 8) - promoting economic growth with decent work - and what milestones have been reached or what challenges need to be overcome as the 2030 deadline approaches? This comprehensive analysis uses extensive data sets to shed light on the different facets of this question and provide a nuanced understanding of global progress and setbacks in this important area.\n
 
