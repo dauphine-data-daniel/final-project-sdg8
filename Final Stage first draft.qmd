@@ -632,6 +632,12 @@ The examination of earnings across various occupations in African countries betw
 
 # Conclusion
 
+Our comprehensive analysis of global progress towards Sustainable Development Goal 8 (SDG 8) – encompassing economic growth and decent work – reveals a complex landscape marked by regional variations, gender disparities, and the influence of democratic governance. Despite concerted efforts since the introduction of the SDGs in 2015, our findings indicate that challenges persist in achieving higher levels of economic productivity. The fluctuating growth rates, particularly the downturn during the Covid-19 pandemic and the subsequent partial recovery, underscore the vulnerability of global economies to external shocks and highlight the need for resilient and diversified economic strategies.
+
+In the realm of labor trends, the persistent gender pay gap stands out, showing statistically significant disparities in earnings between males and females. This gap has remained resistant to change over the years, emphasizing the need for more targeted gender equality measures in the workplace. Additionally, our exploration of youth unemployment and informal employment has brought to light significant regional differences and gender-based trends in job security and formality. The data suggests that more democratic countries tend to have lower youth unemployment rates, hinting at the potential positive impact of democratic values on employment opportunities for young people. However, the lack of a clear correlation between overall unemployment and democracy levels suggests that other factors may play a significant role in shaping employment trends.
+
+As we move closer to the 2030 deadline for the SDGs, our study underscores the importance of continued efforts to address these challenges. The integration of robust labor market data from the ILO and insights from The Economist’s World Democracy Index has provided a nuanced understanding of how different regions, genders, and political contexts influence the achievement of decent work and economic growth. Our analysis highlights the need for policies that not only foster economic growth but also ensure inclusivity, gender equality, and adaptability to global changes. As we look forward, the data and trends we have uncovered will be crucial in guiding effective strategies and actions to accelerate progress towards the ambitious yet essential goals of SDG 8.
+
 # Annex
 
 [Link to the Github](https://github.com/dauphine-data-daniel/final-project-sdg8)
