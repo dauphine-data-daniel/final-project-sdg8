@@ -15,7 +15,13 @@ library(ggplot2)
 library(dplyr)
 library(tidyr)
 library(vroom)
-library(stringr)
+library(stringr) 
+library(countrycode)
+library(maps) 
+library(sf) 
+library(rnaturalearth)
+library(rnaturalearthdata)
+library(viridis)
 ```
 
 [Link to the Github](https://github.com/dauphine-data-daniel/final-project-sdg8)
@@ -338,7 +344,6 @@ informal <- informal |>
 
 
 
-
 ## Merge 1., 2.,  3., 4. and 5. 
 
 We merge the datasets by the variables *ref_area*, *time* and *sex*. Since not all variables are available for the same countries and years, it is clear that some information gets lost in the merging process. In the process of our analysis, it might make sense at some points to use only parts of the dataset to avoid redundancy and allow for a maximum exploitation of available information. 
@@ -427,4 +432,59 @@ head(merged_final)
 
 
 
-## TEST TEST HILFE
+## Analysis 
+
+### Economic growth 
+
+Real GDP per unit of labor input is a measure of labor productivity. When monitored over time, it offers insight into labor productivity growth, and on the evolution, efficiency and quality of human capital in the production process. Economic growth in a country can be described either to increased labor input or to more effective work by those who are employed. This indicator casts light on the latter effect, being therefore a key measure of economic performance. Labor productivity (and growth) estimates can contribute to the understanding of how labor market performance affects living standards.
+
+The corresponding target, as phrased in the SDGs, is to "achieve higher levels of economic productivity through diversification, technological upgrading and innovation, including through a focus on high-value added and labour-intensive sectors". The following maps show the growth rates of real GDP per worker in 2015 and 2022. 
+
+```{r}
+growth <- growth |>
+  filter(!is.na(ref_area), !is.na(time), !is.na(growth_821))
+
+
+world <- ne_countries(scale = "medium", returnclass = "sf")
+
+growth_world <- merge(world, growth, by.x = "name", by.y = "ref_area", all.x = TRUE)
+
+growth_world_combined <- rbind(
+  filter(growth_world, time==2015),
+  filter(growth_world, time==2020), 
+  filter(growth_world, time==2022)
+)
+```
+
+
+```{r}
+growth_world_combined |> 
+  ggplot() +
+  geom_sf(aes(fill = growth_821)) +
+  scale_fill_viridis_c(option = "viridis", 
+                       #name = "Growth Rate", 
+                       #breaks = seq(-10, 10, by = 2), 
+                       limits = c(-10, 10)) +
+  theme_void() +
+  labs(title = "World map of growth rates per employed worker", subtitle = "2015, 2020, 2022") +
+  facet_wrap(~time)
+
+```
+
+```{r}
+mean_growth <- growth |> 
+  #filter(time==2015) |> 
+  group_by(time) |>
+  summarise(mean_growth = mean(growth_821, na.rm = TRUE))
+```
+
+
+```{r}
+mean_growth |> 
+  ggplot() + 
+  geom_line(aes(x=time, y=mean_growth)) + 
+  labs(title = "Mean growth per employed worker worldwide in %", x = "Years", y="Mean growth rate")
+```
+
+The worldwide mean growth rate was `r mean_growth[16,2]`% in 2015 and `r mean_growth[23,2]`% in 2022. It can be seen that the average growth rate worldwide seems to have recovered from the severe collaps in 2020 but has also not increased significantly since the start of the implementation of SDGs in 2020. However, it can be seen in the world maps that there were some regional differences. European countries are growth level from before the Covid crisis, while most Asian and African countries are not back on the levels from before the pandemic. The reasons for that are versatile, but in terms of the long term target by the UN, some change is stil necessary to "higher levels of economic productivity" until 2030.
+
