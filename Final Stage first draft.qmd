@@ -55,9 +55,6 @@ Furthermore, the inclusion of The Economist's World Democracy Index introduces a
 
 The integration of these two robust data sources - the ILO datasets and The Economist's World Democracy Index - provides a comprehensive view of the progress towards SDG 8. It allows for a well-rounded analysis, taking into account a range of variables that can impact the achievement of decent work and economic growth globally. This fusion not only offers insights into the labor market and economic conditions but also enables the exploration of broader socio-political factors that may influence these economic outcomes.
 
-# Conclusion
-
-# Annex1
 
 ## 1. GDP Growth Data
 
@@ -595,6 +592,8 @@ ggplot(merged_final, aes(x = time, y = earnings_851, fill = sex)) +
 
 ```
 An examination of earnings since 2011 reveals a consistent upward trend in nominal earnings. However, this increase has not bridged the gender pay gap, with males consistently receiving higher pay than females across the years. This persistent disparity underscores the enduring challenge of achieving gender equality in the workplace. The trend suggests some progress in overall earnings but highlights the need for more targeted efforts to address gender-based income inequality.
+
+# Conclusion
 
 # Annex
 
